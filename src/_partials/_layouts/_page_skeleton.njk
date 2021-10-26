@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% include "_includes/_seo.njk" %}
+    {% include "_includes/_open_graph.njk" %}
+
+    <link rel="manifest" href="/site.webmanifest">
+    <script defer src="scripts/main.js?version={{ version }}"></script>
+    <link rel="stylesheet" href="styles/main.css?version={{ version }}">
+  </head>
+  <body class="{{ 'debug-screens' if utils.devMode }}">
+   {{ content | safe }}
+  </body>
+</html>

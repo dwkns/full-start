@@ -1,0 +1,71 @@
+{% macro fancyThing( data = "nothing" ) %}
+<p class="mt-4">you gave me {{ data }}</p>
+{% endmacro %}
+
+{% macro fancyBlock( data = "nothing" ) %}
+<div class="grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3">
+  <div class="grid gap-12 xl:col-span-3 xl:h-128 md:grid-cols-1 xl:grid-cols-3">
+    <div class="h-56 bg-blue-200 shadow-sm xl:h-full xl:col-span-2">1</div>
+    <div class="mb-4 text-xl xl:h-full xl:mt-0">
+      <p class="">{{title}}</p>
+      <p class="text-sm underline hover:text-gray-600 hover:cursor-pointer">some-link</p>
+    </div>
+  </div>
+  <div class="grid gap-12 md:grid-cols-1">
+    <div class="h-56 bg-blue-200 shadow-sm ">2</div>
+    <div class="mb-4 text-xl xl:-mt-6">
+      <p class="">{{title}}</p>
+      <p class="text-sm underline ">some-link</p>
+    </div>
+  </div>
+  <div class="grid gap-12 md:grid-cols-1">
+    <div class="h-56 bg-blue-200 shadow-sm ">3</div>
+    <div class="mb-4 text-xl xl:-mt-6">
+      <p class="">{{title}}</p>
+      <p class="text-sm underline hover:text-gray-600 hover:cursor-pointer">some-link</p>
+    </div>
+  </div>
+  <div class="grid gap-12 md:grid-cols-1">
+    <div class="h-56 bg-blue-200 shadow-sm ">4</div>
+    <div class="mb-4 text-xl xl:-mt-6">
+      <p class="">{{title}}</p>
+      <p class="text-sm underline hover:text-gray-600 hover:cursor-pointer">some-link</p>
+    </div>
+  </div>
+  <div class="grid gap-12 md:grid-cols-1">
+    <div class="h-56 bg-blue-200 shadow-sm ">2</div>
+    <div class="mb-4 text-xl xl:-mt-6">
+      <p class="">{{title}}</p>
+      <p class="text-sm underline hover:text-gray-600 hover:cursor-pointer">some-link</p>
+    </div>
+  </div>
+  <div class="grid gap-12 md:grid-cols-1">
+    <div class="h-56 bg-blue-200 shadow-sm ">3</div>
+    <div class="mb-4 text-xl xl:-mt-6">
+      <p class="">{{title}}</p>
+      <p class="text-sm underline hover:text-gray-600 hover:cursor-pointer">some-link</p>
+    </div>
+  </div>
+  <div class="grid gap-12 md:grid-cols-1">
+    <div class="h-56 bg-blue-200 shadow-sm ">4</div>
+    <div class="mb-4 text-xl xl:-mt-6">
+      <p class="">{{title}}</p>
+      <p class="text-sm underline hover:text-gray-600 hover:cursor-pointer">some-link</p>
+    </div>
+  </div>
+  <div class="grid gap-12 md:grid-cols-1">
+    <div class="h-56 bg-blue-200 shadow-sm ">2</div>
+    <div class="mb-4 text-xl xl:-mt-6">
+      <p class="">{{title}}</p>
+      <p class="text-sm underline hover:text-gray-600 hover:cursor-pointer">some-link</p>
+    </div>
+  </div>
+  <div class="grid gap-12 md:grid-cols-1">
+    <div class="h-56 bg-blue-200 shadow-sm ">3</div>
+    <div class="mb-4 text-xl xl:-mt-6">
+      <p class="">{{title}}</p>
+      <p class="text-sm underline hover:text-gray-600 hover:cursor-pointer">some-link</p>
+    </div>
+  </div>
+</div>
+{% endmacro %}

@@ -1,0 +1,11 @@
+{
+  "name": "Under2",
+  "nameLegal": "Under2 Limited",
+  "url": "https://yourUrl.com",
+  "logoUrl": "https://yourUrl.com/images/someLogoFile.png",
+  "baseUrl": "/",
+  "author": {
+    "handle": "@dwkns",
+    "name": "dwkns"
+  }
+}
