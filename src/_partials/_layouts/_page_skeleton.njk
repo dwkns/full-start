@@ -10,7 +10,7 @@
     {%- include "_includes/_seo.njk" -%}
     {%- include "_includes/_open_graph.njk" -%}
     <link rel="manifest" href="/site.webmanifest">
-    {# <script defer src="scripts/main.js"></script> #}
+    <script defer src="scripts/main.js"></script>
   </head>
   <body class="{{ 'debug-screens' if utils.devMode }}">
    {{ content | safe }}
