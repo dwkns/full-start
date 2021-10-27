@@ -4,18 +4,21 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@11ty/eleventy": "^0.12.1",
-    "alpinejs": "^2.8.2",
-    "autoprefixer": "^10.2.5",
-    "canvas-confetti": "^1.4.0",
+    "@11ty/eleventy": "v1.0.0-beta.3",
+    "@tailwindcss/forms": "^0.3.4",
+    "@tailwindcss/typography": "^0.4.1",
+    "alpinejs": "^3.4.2",
+    "autoprefixer": "^10.3.7",
     "cssnano": "^5.0.1",
+    "dotenv": "^10.0.0",
     "esbuild": "^0.11.12",
     "npm-run-all": "^4.1.5",
-    "postcss": "^8.2.10",
+    "postcss": "^8.3.11",
     "postcss-cli": "^8.3.1",
     "rimraf": "^3.0.2",
-    "tailwindcss": "^2.1.1",
-    "tailwindcss-debug-screens": "^2.0.0"
+    "tailwindcss": "^2.2.17",
+    "tailwindcss-debug-screens": "^2.2.0",
+    "web-vitals": "^2.1.2"
   },
   "env": {
     "node": true
@@ -23,12 +26,16 @@
   "scripts": {
     "clean": "rimraf dist build",
     "start": "npm-run-all clean -p dev:* ",
-    "dev": "npm-run-all clean -p dev:* ",
-    "dev:postcss": "TAILWIND_MODE=watch NODE_ENV=development postcss src/styles/main.css -o dist/styles/main.css -w",
-    "dev:eleventy": "eleventy --serve",
-    "build": "npm-run-all clean -p build:*",
+    "dev": "npm-run-all clean -s dev:* ",
+    "dev:postcss": "TAILWIND_MODE=watch NODE_ENV=development postcss ./src/styles/main.css -o ./src/styles/compiled.css --watch",
+    "dev:esbuild": "NODE_ENV=development esbuild src/scripts/main.js --bundle --watch --outfile=dist/scripts/main.js",
+    "dev:eleventy": "NODE_ENV=development eleventy --serve --quiet",
+    "build": "npm-run-all clean -s build:*",
+    "build:postcss": "TAILWIND_MODE=build NODE_ENV=production postcss ./src/styles/main.css -o ./src/styles/compiled.css",
+    "build:esbuild": "esbuild src/scripts/main.js --bundle --minify --sourcemap --outfile=dist/scripts/main.js",
     "build:eleventy": "NODE_ENV=production eleventy",
-    "build:postcss": "TAILWIND_MODE=build NODE_ENV=production postcss src/styles/main.css -o dist/styles/main.css"
+    "serve": "NODE_ENV=production npm-run-all clean -p build:* serve-static",
+    "serve-static": "npx serve dist"
   },
   "author": "dazza"
 }

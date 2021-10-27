@@ -20,12 +20,14 @@ module.exports = {
       '2xl': '1500px',
       '3xl': '1600px',
     },
+    fontFamily: {
+      // 'sans': ['Inter', ...tailwindTheme.fontFamily.sans],
+      'sans': ['Plex', ...tailwindTheme.fontFamily.sans],
+      // 'sans': ['Inter'],
+    },
     extend: {
       colors: {
         'brand-red': brandRed,
-      },
-      fontFamily: {
-        'sans': ['Inter', ...tailwindTheme.fontFamily.sans],
       },
       spacing: {
         'u2-pad': 'clamp(1.2rem, 3vw, 8rem)',

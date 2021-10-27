@@ -11,6 +11,8 @@ module.exports = (eleventyConfig) => {
 
   // watch our script folder for changes. 
   eleventyConfig.addWatchTarget("./src/scripts/");
+  eleventyConfig.addWatchTarget("./eleventy/");
+  eleventyConfig.addWatchTarget("./tailwind.config.js");
   
   // use esbuild to compile our JavaScript
   eleventyConfig.on("beforeBuild", () => {
@@ -24,7 +26,8 @@ module.exports = (eleventyConfig) => {
 
   eleventyConfig.addPassthroughCopy({
     'src/static': './',
-    'src/images': './images'
+    'src/images': './images',
+    'src/styles/compiled.css': './styles/compiled.css'
   });
 
   eleventyConfig.setDataDeepMerge(true);

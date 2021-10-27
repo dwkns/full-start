@@ -1,12 +1,8 @@
-import "alpinejs";
-import confetti from 'canvas-confetti';
+// import "alpinejs";
+import {getLCP, getFID, getCLS} from 'web-vitals';
 
-const fireworks = () =>
-  confetti.create(document.getElementById('canvas'), {
+getCLS(console.log);
+getFID(console.log);
+getLCP(console.log);
 
-  })({ particleCount: 100, spread: 100 });
-
-document.getElementById('button').addEventListener('click', () => {
-  console.log('button press');
-  fireworks();
-}); 
+console.log('done');
