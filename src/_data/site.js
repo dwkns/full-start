@@ -1,6 +1,23 @@
 let siteData = {
-  name: "dwkns",
-  legalName: "dwkns ltd",
+  name: "comapny name",
+  legalName: "comapny name ltd",
+  url: "https://someurl.com",
+  logo: "https://someurl.com/images/logo.png",
+  foundingDate: "2019",
+  privacyEmail: "privacy@esomeurl.com",
+  address: {
+    type: "PostalAddress",
+    streetAddress: "streetAddress",
+    addressRegion: "addressRegion",
+    postalCode: "postalCode",
+    addressCountry: "addressCountry"
+  },
+  twitterURL: "https://twitter.com/yourTwitter",
+  linkedInURL: "https://www.linkedin.com/company/yourCompany/",
+  author: {
+    handle: "",
+    name: ""
+  },
   development: {
     baseURL: 'http://localhost:8080',
     createSitemap: true,

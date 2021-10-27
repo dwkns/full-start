@@ -1,14 +1,25 @@
 <meta name="description" content="{{ description }}"/>
-<meta name="keywords" content="{{ keywords }}"/>
 <link rel="canonical" href="{{ canonical  if canonical else site[currentEnv].baseURL + page.url }}"/>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "{{ site.name }}",
-    "url": "{{ site.baseUrl }}",
-    "logo": "{{ site.logoUrl }}",
-    "sameAs": ["{{ site.defaults.twitterUrl }}", "{{ site.defaults.linkedInURL }}", "{{ site.baseUrl }}"]
+    "name": "{{site.name}}",
+    "legalName": "{{ site.legalName }}",
+    "url": "{{site[currentEnv].baseURL}}",
+    "logo": "{{site.logo}}",
+    "foundingDate": "{{site.foundingDate}}",
+    "address": {
+    "@type": "{{site.address.type}}", 
+     "streetAddress": "{{site.address.streetAddress}}", 
+     "addressRegion": "{{site.address.addressRegion}}", 
+     "postalCode": "{{site.address.postalCode}}", 
+     "addressCountry": "{{site.address.addressCountry}}" 
+    },
+    "sameAs": [
+      "{{ site.twitterURL }}", 
+      "{{ site.linkedInURL }}", 
+      "{{ site[currentEnv].baseURL }}"]
   }
 </script>
 {# Indexing 

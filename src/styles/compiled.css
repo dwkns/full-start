@@ -697,10 +697,6 @@ video {
 	background-color: rgba(254, 243, 199, var(--tw-bg-opacity));
 }
 
-.p-12 {
-	padding: 3rem;
-}
-
 .p-8 {
 	padding: 2rem;
 }
