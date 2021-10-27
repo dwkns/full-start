@@ -1,7 +1,6 @@
 let siteData = {
   name: "dwkns",
   legalName: "dwkns ltd",
-
   development: {
     baseURL: 'http://localhost:8080',
     createSitemap: true,
