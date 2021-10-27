@@ -750,31 +750,15 @@ video {
 	box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.font-thin {
-      font-variation-settings: 'wght' 100;
-  }
-
-.font-medium {
-      font-variation-settings: 'wght' 500;
-  }
-
-.font-bold {
-      font-variation-settings: 'wght' 700;
-  }
-
-.font-black {
-      font-variation-settings: 'wght' 900;
-  }
-
-
-/* Classes for variable fonts */
 .hover\:cursor-pointer:hover {
 	cursor: pointer;
 }
+
 .hover\:text-gray-600:hover {
 	--tw-text-opacity: 1;
 	color: rgba(75, 85, 99, var(--tw-text-opacity));
 }
+
 @media (min-width: 768px) {
 
 	.md\:grid-cols-2 {
@@ -785,6 +769,7 @@ video {
 		grid-template-columns: repeat(1, minmax(0, 1fr));
 	}
 }
+
 @media (min-width: 1300px) {
 
 	.xl\:col-span-3 {

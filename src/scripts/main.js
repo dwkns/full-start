@@ -1,4 +1,4 @@
-// import "alpinejs";
+import "alpinejs";
 import {getLCP, getFID, getCLS} from 'web-vitals';
 
 getCLS(console.log);
