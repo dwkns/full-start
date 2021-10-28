@@ -20,6 +20,7 @@ let siteData = {
   },
   development: {
     baseURL: 'http://localhost:8080',
+    debug: true,
     createSitemap: true,
     allowIndexing: false,
     allowRobots: true,

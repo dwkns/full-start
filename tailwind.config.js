@@ -1,7 +1,6 @@
 const tailwindTheme = require('tailwindcss/defaultTheme');
 const debugScreens = require('tailwindcss-debug-screens');
 
-const brandRed = '#ee88a1';
 
 module.exports = {
   mode: 'jit',
@@ -27,10 +26,11 @@ module.exports = {
     },
     extend: {
       colors: {
-        'brand-red': brandRed,
+        'brand': 'rgb(11, 134, 235);',
+        'brand-alt': 'rgb(11, 134, 235);',
       },
       spacing: {
-        'u2-pad': 'clamp(1.2rem, 3vw, 8rem)',
+        'u2-pad': 'clamp(1rem, 4vw, 8rem)',
       }
     },
   },

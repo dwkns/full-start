@@ -22,3 +22,23 @@
 } */
 
 @tailwind utilities;
+
+[x-cloak] {
+    display: none !important;
+  }
+
+:root {
+    --brand: rgb(11, 134, 235);
+    --brand-alt: rgb(23, 161, 23);
+}
+
+@layer utilities {
+  @variants responsive {
+    .hover-link:hover {
+      cursor: pointer;
+      text-decoration-thickness: 4px;
+      text-decoration-line: underline;
+      text-decoration-color: var(--brand);
+    }
+  }
+}
