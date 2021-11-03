@@ -1,23 +1,26 @@
 ---
-title: 'Four Reasons Your FinTech Firm Needs Modern Web Development Technology'
-summary: 'The majority of FinTech firms should replace their legacy server-based website with a modern tech stack. Why?: Technology choice is a reflection of your brand, developers seeking jobs will judge your tech, you need a high-performance site to differentiate your firm, and rapid growth demands adaptable tech.'
-author: Darrell Wilkins
-date: 2021-10-18
-type: 'Article'
-category: 'Strategy' 
+title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
 layout: _regular_page.njk
 permalink: /about-us/
+type: 'Article'
+category: 'Strategy' 
+metadata:
+  title: Page title for the HEAD and OG
+  description: The page description adslkfjasdlkf
+  og_image:
 noindex: 
-sitemap: 
+sitemap:
+author: Darrell Wilkins
+date: 2021-10-18
 ---
-
 <section class="mx-auto my-24 max-w-screen-3xl px-u2-pad">
   <div class="grid grid-cols-2 gap-12 ">
     <div class="col-span-2 pt-10 bg-yellow-300x lg:top-0 lg:h-96 lg:col-span-1 lg:sticky">
       <p  class="text-5xl font-black">{{title}}</p>
-      <p  class="mt-8 text-base font-normal text-gray-500">A whitepaper by Darrell Wilkins on 08 Oct 2021</p>
+      <p  class="mt-8 text-base font-normal text-gray-500">{{type | addAnOrA | capitalize }} by {{author}} on {{date | readableDate}}</p>
       <div class="flex items-center mt-4">
-        <span class="px-2 py-1 text-xs font-semibold text-white bg-gray-400 rounded-full hover:bg-yellow-600 hover:text-black">Strategy</span>
+        <span class="px-2 py-1 text-xs font-semibold text-white bg-gray-400 rounded-full hover:bg-yellow-600 hover:text-black">{{category}}</span>
       </div>
     </div>
 

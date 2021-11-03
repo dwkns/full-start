@@ -1,4 +1,6 @@
 const { build } = require("esbuild");
+const lodash = require("lodash");
+const { DateTime } = require("luxon");
 const production = process.env.NODE_ENV === `production` // true when NODE_ENV is production
 
 module.exports = (eleventyConfig) => {
@@ -13,6 +15,25 @@ module.exports = (eleventyConfig) => {
   eleventyConfig.addWatchTarget("./src/scripts/");
   eleventyConfig.addWatchTarget("./eleventy/");
   eleventyConfig.addWatchTarget("./tailwind.config.js");
+
+  // return a readable date
+  eleventyConfig.addFilter("readableDate", dateObj => {
+    return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat("dd LLL yyyy");
+  });
+
+  // Prepend 'A' or 'An' depeding on the next word supplied
+  eleventyConfig.addFilter("addAnOrA", word => {
+    firstChar = word.charAt(0)
+    if (/[aeiou]/i.test(firstChar)) {
+      return `An ${lodash.lowerCase(word)}`
+    } else {
+      return `A ${lodash.lowerCase(word)}`
+    }
+
+  });
+
+
+
   
   // use esbuild to compile our JavaScript
   eleventyConfig.on("beforeBuild", () => {
