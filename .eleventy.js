@@ -34,7 +34,7 @@ module.exports = (eleventyConfig) => {
 
 
   eleventyConfig.addPassthroughCopy({
-    'src/static': './',
+    'src/fonts': './fonts',
     'src/images': './images',
     'src/styles/compiled.css': './styles/compiled.css'
   });
