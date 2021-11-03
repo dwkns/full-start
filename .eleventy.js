@@ -33,18 +33,6 @@ module.exports = (eleventyConfig) => {
   });
 
 
-
-  
-  // use esbuild to compile our JavaScript
-  eleventyConfig.on("beforeBuild", () => {
-    build({
-      entryPoints: ["./src/scripts/main.js"],
-      outfile: "dist/scripts/main.js",
-      bundle: true,
-      minify: production,
-    }).catch(() => process.exit(1));
-  });
-
   eleventyConfig.addPassthroughCopy({
     'src/static': './',
     'src/images': './images',
