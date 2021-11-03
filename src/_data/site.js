@@ -1,33 +1,60 @@
 let siteData = {
   name: "comapny name",
+  locale: "en_GB",
   legalName: "comapny name ltd",
   url: "https://someurl.com",
   logo: "https://someurl.com/images/logo.png",
   foundingDate: "2019",
-  privacyEmail: "privacy@esomeurl.com",
+  privacyEmail: "default_privacy@esomeurl.com",
   address: {
-    type: "PostalAddress",
-    streetAddress: "streetAddress",
-    addressRegion: "addressRegion",
-    postalCode: "postalCode",
-    addressCountry: "addressCountry"
+    type: "default_PostalAddress",
+    streetAddress: "default_streetAddress",
+    addressRegion: "default_addressRegion",
+    postalCode: "default_postalCode",
+    addressCountry: "default_addressCountry"
   },
   twitterURL: "https://twitter.com/yourTwitter",
   linkedInURL: "https://www.linkedin.com/company/yourCompany/",
   author: {
-    handle: "",
-    name: ""
+    twitterHandle: "@default_twitter_handle",
+    name: "dazza"
+  },
+  metadata: {
+    default_og_image: '/images/default_og_image.png',
+    default_og_type: 'article'
   },
   development: {
+    domain: 'localhost',
     baseURL: 'http://localhost:8080',
     debug: true,
     createSitemap: true,
     allowIndexing: false,
     allowRobots: true,
     minifyCSS: false,
-    inlineCSS: true,
+    inlineCSS: false,
+  },
+  staging: {
+    domain: 'staging.yoursite.com',
+    baseURL: 'https://staging.yoursite.com',
+    debug: true,
+    createSitemap: true,
+    allowIndexing: false,
+    allowRobots: true,
+    minifyCSS: false,
+    inlineCSS: false,
+  },
+  production: {
+    domain: 'yoursite.com',
+    baseURL: 'https://yoursite.com',
+    debug: true,
+    createSitemap: true,
+    allowIndexing: false,
+    allowRobots: true,
+    minifyCSS: false,
+    inlineCSS: false,
   },
   currentYear: new Date().getFullYear(),
+  currentDate: new Date(),
   version: Math.random().toString(36).substr(2, 8),
 }
 

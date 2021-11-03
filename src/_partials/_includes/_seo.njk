@@ -1,28 +1,6 @@
-<meta name="description" content="{{ description }}"/>
-<link rel="canonical" href="{{ canonical  if canonical else site[currentEnv].baseURL + page.url }}"/>
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "{{site.name}}",
-    "legalName": "{{ site.legalName }}",
-    "url": "{{site[currentEnv].baseURL}}",
-    "logo": "{{site.logo}}",
-    "foundingDate": "{{site.foundingDate}}",
-    "address": {
-    "@type": "{{site.address.type}}", 
-     "streetAddress": "{{site.address.streetAddress}}", 
-     "addressRegion": "{{site.address.addressRegion}}", 
-     "postalCode": "{{site.address.postalCode}}", 
-     "addressCountry": "{{site.address.addressCountry}}" 
-    },
-    "sameAs": [
-      "{{ site.twitterURL }}", 
-      "{{ site.linkedInURL }}", 
-      "{{ site[currentEnv].baseURL }}"]
-  }
-</script>
-{# Indexing 
+<meta name="description" content="{{ description or metadata.description}}">
+    <link rel="canonical" href="{{ canonical  or site[currentEnv].baseURL + page.url }}">
+    {# Indexing 
   noindex in front matter can be: 
     true — page will not be indexed
     false — page will be indexed 
@@ -37,11 +15,34 @@
 {%- if site[currentEnv].allowIndexing -%}
   <meta name="robots" content="{{ noIndexValue }}">
 {%- else  -%}
-  <meta name="robots" content="noindex">
-  <meta name="robotsOnProductionWillBe" content="{{ noIndexValue }}">
+    <meta name="robots" content="noindex">
+    <meta name="robotsOnProductionWillBe" content="{{ noIndexValue }}">
 {%- endif -%}
-
-{# Robots values
+{% set ldJSON %}{
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "{{site.name}}",
+      "legalName": "{{ site.legalName }}",
+      "url": "{{site[currentEnv].baseURL}}",
+      "logo": "{{site.logo}}",
+      "foundingDate": "{{site.foundingDate}}",
+      "address": {
+      "@type": "{{site.address.type}}", 
+      "streetAddress": "{{site.address.streetAddress}}", 
+      "addressRegion": "{{site.address.addressRegion}}", 
+      "postalCode": "{{site.address.postalCode}}", 
+      "addressCountry": "{{site.address.addressCountry}}" 
+      },
+      "sameAs": [
+        "{{ site.twitterURL }}", 
+        "{{ site.linkedInURL }}", 
+        "{{ site[currentEnv].baseURL }}"]
+    }{% endset %}
+    <script {{ site[utils.currentEnv].baseUrl }} type="application/ld+json">
+    {{ldJSON | safe }}
+    </script>
+    <link rel="manifest" href="/site.webmanifest">
+    {#- Robots values
   Noindex: Tells a search engine not to index a page.
   Index: Tells a search engine to index a page. Note that you don’t need to add this meta tag; it’s the default.
   Follow: Even if the page isn’t indexed, the crawler should follow all the links on a page and pass equity to the linked pages.
@@ -52,5 +53,4 @@
   Nocache: Same as noarchive, but only used by Internet Explorer and <Firefox class=""> </Firefox>
   Nosnippet: Tells a search engine not to show a snippet of this page (i.e. meta description) of this page on a SERP.
   Noodyp/noydir [OBSOLETE]: Prevents search engines from using a page’s DMOZ description as the SERP snippet for this page. However, DMOZ was retired in early 2017, making this tag obsolete.
-  Unavailable_after: Search engines should no longer index this page after a particular date.
-#}
+  Unavailable_after: Search engines should no longer index this page after a particular date.#}

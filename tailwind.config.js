@@ -26,8 +26,8 @@ module.exports = {
     },
     extend: {
       colors: {
-        'brand': 'rgb(11, 134, 235);',
-        'brand-alt': 'rgb(11, 134, 235);',
+        'brand': '#0B86EB',
+        'brand-alt': '#15609F',
       },
       spacing: {
         'u2-pad': 'clamp(1rem, 4vw, 8rem)',
