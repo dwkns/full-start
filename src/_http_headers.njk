@@ -2,12 +2,11 @@
 permalink: /_headers
 eleventyExcludeFromCollections: true
 ---
-# a path:
+# Long cache time on the fonts
 /fonts/IBMPlexSans.var.latin-subset.woff2
   cache-control: public
   cache-control: max-age=31536000
   cache-control: immutable
-# another path:
+# Example custom header on about page
 /about-us/*
-  # headers for that path:
-  d-header: bumble
+  custom-header: custom-value
