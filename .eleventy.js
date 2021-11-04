@@ -1,7 +1,5 @@
-const { build } = require("esbuild");
 const lodash = require("lodash");
 const { DateTime } = require("luxon");
-const production = process.env.NODE_ENV === `production` // true when NODE_ENV is production
 
 module.exports = (eleventyConfig) => {
 
@@ -29,8 +27,8 @@ module.exports = (eleventyConfig) => {
     } else {
       return `A ${lodash.lowerCase(word)}`
     }
-
   });
+
 
 
   eleventyConfig.addPassthroughCopy({
