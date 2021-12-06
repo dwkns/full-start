@@ -1,0 +1,26 @@
+{# {% import "_components/_buttons.njk" as buttons with context %}
+ <div id='cookie-banner' class="fixed bottom-0 right-0 z-10 hidden mb-2 text-sm mx-u2-gutter-sm sm:mx-u2-gutter text-u2-white bg-u2-orange"> 
+<div id='cookie-banner' class="mb-2 text-sm text-white bg-yellow-700 mx-u2-gutter-sm sm:mx-u2-gutter">
+  <div class="flex flex-col items-center h-full p-4 md:flex-row md:max-w-3xl ">
+    <p class="mt-0 mr-4 text-base md:pr-8">We take your privacy seriously and will not sell or share your data. We do use cookies to enhance site experience and to analyze our marketing performance. Learn more in our <a class="underline hover:text-u2-black" 
+    href="{{site.links.privacy}}">Privacy Notice</a>.</p>
+    
+    <span class="mt-4 md:mt-0">
+     <button id="acceptPrivacyBannerButton" class="max-w-sm px-8 py-2 text-base font-semibold text-center bg-blue-700 rounded-sm cursor-pointer min-w-u2-button ">Close me</button>
+     </span>
+  </div>
+</div>
+
+<script>
+// listener for the privacy button. Should this be in component. 
+document.getElementById("acceptPrivacyBannerButton").onclick = (event) => {
+  // Makes the assumption that Cookies (js-cookie) is in the global scope.
+//  Cookies.set('fullStartAcceptPrivacy', true,  { expires: 1000 , secure: true,  sameSite: 'strict' });
+
+ Cookies.set('fullStartAcceptPrivacy', true,  { expires: 1000 , secure: true,  sameSite: 'strict' });
+   console.log(a);
+  document.getElementById("cookie-banner").classList.remove("fixed");
+  document.getElementById("cookie-banner").classList.add("hidden");
+  event.preventDefault();
+}
+</script> #}

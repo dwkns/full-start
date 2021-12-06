@@ -1,0 +1,51 @@
+{% macro button(
+          text='default button text',
+          url=false, colour=false, 
+          width='min-w-u2-button max-w-sm', 
+          id=false, 
+          topMargin='mt-16' , 
+          alpineJS='',
+          group,
+          colour=''
+          ) -%}
+
+  {# default button assumes white background #}
+  {%- set buttonColours = 'bg-u2-black text-u2-white' -%}
+  {%- set hoverbuttonColours = 'hover:bg-u2-gold hover:text-u2-black' -%}
+  {%- if group -%}
+    {%- set hoverbuttonColours = 'hover:bg-u2-gold hover:text-u2-black' -%}
+  {%- endif -%}
+
+  {%- if colour == 'onBlack' -%}
+    {%- set buttonColours = 'bg-u2-white text-u2-black' -%}
+    {%- set hoverbuttonColours = 'hover:bg-u2-gold hover:text-u2-black' -%}
+    {%- if group -%}
+      {%- set hoverbuttonColours = 'group-hover:bg-u2-gold group-hover:text-u2-black' -%}
+    {%- endif -%}
+  {%- endif -%}
+
+
+  {%- if colour == 'onOrange' -%}
+    {%- set buttonColours = 'bg-u2-orangeAlt text-u2-white' -%}
+    {%- set hoverbuttonColours = 'hover:bg-u2-black hover:text-u2-white' -%}
+    {%- if group -%}
+      {%- set hoverbuttonColours = 'group-hover:bg-u2-black group-hover:text-u2-white' -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {# This is hacky — improve it #}
+  {%- if url != 'x-bind:href=getDownloadURL' -%}
+    {%- set link = 'href=' + url + '' -%}
+  {% else  %}
+    {%- set link = url  -%}
+  {%- endif -%}
+
+  {%- if group -%}
+    <button {{ ('id="' + id +'"' if id) | safe }} class="{{ width }} {{ buttonColours }} {{hoverbuttonColours}}  {{topMargin}} px-8 py-2 text-base font-semibold rounded-sm text-center cursor-pointer {{group}} ">{{text}}</button>
+  {%- else  -%}
+    {{ ("<a " + link +">" if url) | safe }}
+      <button {{ alpineJS }} {{ ('id="' + id +'"' if id) | safe }} class="{{ width }} {{ buttonColours }} {{hoverbuttonColours}}  {{topMargin}} px-8 py-2 text-base font-semibold rounded-sm text-center cursor-pointer  ">{{text}}</button>
+    {{ ("</a>" if url)  | safe }}  
+  {%- endif -%}
+
+{% endmacro -%}
