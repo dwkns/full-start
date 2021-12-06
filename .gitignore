@@ -2,9 +2,4 @@ dist
 node_modules
 node_modules.nosync
 .env
-<<<<<<< HEAD
 yarn-error.log
-=======
-# Local Netlify folder
-.netlify
->>>>>>> 64248d31bd9d49ba2ed62f38b55605099661dbf3

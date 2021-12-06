@@ -907,18 +907,6 @@ video {
 	background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
 }
 
-<<<<<<< HEAD
-=======
-.bg-purple-500 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(139, 92, 246, var(--tw-bg-opacity));
-}
-
-.p-8 {
-	padding: 2rem;
-}
-
->>>>>>> 64248d31bd9d49ba2ed62f38b55605099661dbf3
 .p-4 {
 	padding: 1rem;
 }
