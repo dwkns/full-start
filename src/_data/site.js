@@ -54,7 +54,10 @@ let siteData = {
     allowRobots: true,
     minifyCSS: true,
     inlineCSS: true,
+<<<<<<< HEAD
     minifyInline_HTML_JS_CSS: true,
+=======
+>>>>>>> 64248d31bd9d49ba2ed62f38b55605099661dbf3
   },
   currentYear: new Date().getFullYear(),
   currentDate: new Date(),
