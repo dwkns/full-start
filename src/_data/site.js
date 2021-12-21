@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 let siteData = {
   name: "comapny name",
   locale: "en_GB",
@@ -25,18 +27,18 @@ let siteData = {
   },
   development: {
     domain: 'localhost',
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://localhost:8080',
     debug: true,
     createSitemap: true,
-    allowIndexing: false,
-    allowRobots: false,
-    minifyCSS: false,
-    inlineCSS: false,
-    minifyInline_HTML_JS_CSS: false,
+    allowIndexing: true,
+    allowRobots: true,
+    minifyCSS: true,
+    inlineCSS: true,
+    minifyInline_HTML_JS_CSS: true,
   },
   staging: {
-    domain: 'staging.yoursite.com',
-    baseURL: 'https://staging.yoursite.com',
+    domain: 'staging-full-start.netlify.app',
+    baseURL: 'https://staging-full-start.netlify.app',
     debug: true,
     createSitemap: true,
     allowIndexing: false,
@@ -46,8 +48,8 @@ let siteData = {
     minifyInline_HTML_JS_CSS: false,
   },
   production: {
-    domain: 'yoursite.com',
-    baseURL: 'https://yoursite.com',
+    domain: 'full-start.netlify.app',
+    baseURL: 'https://full-start.netlify.app',
     debug: false,
     createSitemap: true,
     allowIndexing: true,
@@ -59,8 +61,9 @@ let siteData = {
   currentYear: new Date().getFullYear(),
   currentDate: new Date(),
   version: Math.random().toString(36).substr(2, 8),
-}
+  currentEnv: process.env.CURRENT_ENV
 
+}
 module.exports = siteData
 
 

@@ -1,7 +1,7 @@
 <meta property="og:title" content="{{ metadata.title or title}}" >
     <meta property="og:description" content="{{ metadata.og_description or metadata.description }}" >
-    <meta property="og:url" content="{{site[currentEnv].baseURL}}{{page.url}}" >
-    <meta property="og:image" content="{{site[currentEnv].baseURL}}{{ metadata.og_image or site.metadata.default_og_image }}" >
+    <meta property="og:url" content="{{site[site.currentEnv].baseURL}}{{page.url}}" >
+    <meta property="og:image" content="{{site[site.currentEnv].baseURL}}{{ metadata.og_image or site.metadata.default_og_image }}" >
     <meta property="og:site_name" content="{{site.name}}" >
     <meta property="og:locale" content="{{site.locale}}" >
     <meta property="og:type" content="{{ metadata.og_type or site.metadata.default_og_type}}" >
@@ -13,7 +13,7 @@
     <meta name="twitter:title" content="{{ metadata.twitter_title or metadata.title or title}} ">
     <meta name="twitter:description" content="{{metadata.twitter_description or metadata.og_description or metadata.description}}">
     <meta name="twitter:site" content="{{ site.author.twitterHandle }}">
-    <meta name="twitter:image" content="{{site[currentEnv].baseURL}}{{ metadata.og_image or site.metadata.default_og_image }}">
+    <meta name="twitter:image" content="{{site[site.currentEnv].baseURL}}{{ metadata.og_image or site.metadata.default_og_image }}">
     <meta name="twitter:creator" content="{{ metadata.twitter_creator or site.author.twitterHandle }}">
-    <meta name="twitter:domain" content="{{ site[currentEnv].domain }}">
+    <meta name="twitter:domain" content="{{ site[site.currentEnv].domain }}">
     <meta name="twitter:dnt" content="on" >

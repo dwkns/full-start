@@ -1,5 +1,5 @@
 <meta name="description" content="{{ description or metadata.description}}">
-    <link rel="canonical" href="{{ canonical  or site[currentEnv].baseURL + page.url }}">
+    <link rel="canonical" href="{{ canonical  or site[site.currentEnv].baseURL + page.url }}">
     {# Indexing 
   noindex in front matter can be: 
     true — page will not be indexed
@@ -12,7 +12,7 @@
 {%- set noIndexValue = 'index' if noindex == undefined else noIndexValue -%}
 {%- set noIndexValue =  'index' if noindex == false else noIndexValue -%}
 {# Turn indexing on/off based on the enviroment #}
-{%- if site[currentEnv].allowIndexing -%}
+{%- if site[site.currentEnv].allowIndexing -%}
   <meta name="robots" content="{{ noIndexValue }}">
 {%- else  -%}
     <meta name="robots" content="noindex">
@@ -23,7 +23,7 @@
       "@type": "Organization",
       "name": "{{site.name}}",
       "legalName": "{{ site.legalName }}",
-      "url": "{{site[currentEnv].baseURL}}",
+      "url": "{{site[site.currentEnv].baseURL}}",
       "logo": "{{site.logo}}",
       "foundingDate": "{{site.foundingDate}}",
       "address": {
@@ -36,10 +36,10 @@
       "sameAs": [
         "{{ site.twitterURL }}", 
         "{{ site.linkedInURL }}", 
-        "{{ site[currentEnv].baseURL }}"]
+        "{{ site[site.currentEnv].baseURL }}"]
     }{% endset %}
-    <script {{ site[utils.currentEnv].baseUrl }} type="application/ld+json">
-    {{ldJSON | safe }}
+    <script type="application/ld+json">
+    {{ ldJSON | safe }}
     </script>
     {#- Robots values
   Noindex: Tells a search engine not to index a page.

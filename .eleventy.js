@@ -1,7 +1,21 @@
 const lodash = require("lodash");
 const { DateTime } = require("luxon");
-
+const util = require('util');
 module.exports = (eleventyConfig) => {
+
+
+    // utility function to log value to HTML
+    eleventyConfig.addFilter('console', function (value) {
+      let str = util.inspect(value);
+      console.log('-------------start console output-------------');
+      console.log(str);
+      console.log('-------------end-------------');
+      let html = `<div style="white-space: pre-wrap;">${unescape(str)}</div>`
+      return unescape(html)
+    });
+
+
+
 
   // detect changes in the output folder and reload browser
   eleventyConfig.setBrowserSyncConfig({
@@ -28,7 +42,6 @@ module.exports = (eleventyConfig) => {
       return `A ${lodash.lowerCase(word)}`
     }
   });
-
 
 
   eleventyConfig.addPassthroughCopy({

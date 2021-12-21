@@ -12,7 +12,7 @@
     {% include "_includes/_icons.njk" %}
     <script defer src="/scripts/main.js"></script>
   </head>
-  <body class="{{ 'debug-screens' if site[currentEnv].debug }}">
+  <body class="{{ 'debug-screens' if site[site.currentEnv].debug }}">
    {%- include "_includes/_cookie-banner.njk" -%}
    {{ content | safe }}
   </body>
