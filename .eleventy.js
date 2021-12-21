@@ -1,22 +1,77 @@
 const lodash = require("lodash");
 const { DateTime } = require("luxon");
 const util = require('util');
-module.exports = (eleventyConfig) => {
+const htmlmin = require("html-minifier");
+
+// load the site configuration files
+const site = require('./src/_data/site.js')
 
 
-    // utility function to log value to HTML
-    eleventyConfig.addFilter('console', function (value) {
-      let str = util.inspect(value);
-      console.log('-------------start console output-------------');
-      console.log(str);
-      console.log('-------------end-------------');
-      let html = `<div style="white-space: pre-wrap;">${unescape(str)}</div>`
-      return unescape(html)
+// ------------- Eleventy Functions -------------
+// Consider extracting these to a seperate file as you use them all the time. 
+
+
+// compress the html and inline CSS & JS
+const htmlminifer = (content, outputPath) => {
+  const minify = site[site.currentEnv].minify_inline_HTML_CSS_JS
+  if (!minify) { return content }
+  if (outputPath && outputPath.endsWith(".html")) {
+    let minified = htmlmin.minify(content, {
+      useShortDoctype: true,
+      removeComments: true,
+      collapseWhitespace: true,
+      minifyJS: true,
+      minifyCSS: true,
     });
+    return minified;
+  }
+  return content;
+
+}
+  // utility function to log value to HTML & the Console
+const logToHTML = (value) => {
+  let str = util.inspect(value);
+  console.log('-------------start console output-------------');
+  console.log(str);
+  console.log('-------------end-------------');
+  let html = `<div style="white-space: pre-wrap;">${unescape(str)}</div>`
+  return unescape(html)
+}
+
+ // return a human readable date
+const readableDate = (dateObj) => {
+  return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat("dd LLL yyyy");
+}
+
+  // Prepend 'A' or 'An' depeding on the next word supplied
+const addAnOrA = (word) => {
+  firstChar = word.charAt(0)
+  if (/[aeiou]/i.test(firstChar)) {
+    return `An ${lodash.lowerCase(word)}`
+  } else {
+    return `A ${lodash.lowerCase(word)}`
+  }
+}
 
 
+// ------------- End of Eleventy Functions -------------
 
 
+module.exports = (eleventyConfig) => {
+  // compress the html and inline CSS & JS
+  eleventyConfig.addTransform("htmlmin", htmlminifer);
+  
+  // utility function to log value to HTML
+  eleventyConfig.addFilter('console', logToHTML);
+
+  // return a human readable date
+  eleventyConfig.addFilter("readableDate", readableDate);
+
+  // Prepend 'A' or 'An' depeding on the next word supplied
+  eleventyConfig.addFilter("addAnOrA", addAnOrA);
+
+
+  
   // detect changes in the output folder and reload browser
   eleventyConfig.setBrowserSyncConfig({
     files: ['dist/**/*'],
@@ -27,22 +82,6 @@ module.exports = (eleventyConfig) => {
   eleventyConfig.addWatchTarget("./src/scripts/");
   eleventyConfig.addWatchTarget("./eleventy/");
   eleventyConfig.addWatchTarget("./tailwind.config.js");
-
-  // return a readable date
-  eleventyConfig.addFilter("readableDate", dateObj => {
-    return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat("dd LLL yyyy");
-  });
-
-  // Prepend 'A' or 'An' depeding on the next word supplied
-  eleventyConfig.addFilter("addAnOrA", word => {
-    firstChar = word.charAt(0)
-    if (/[aeiou]/i.test(firstChar)) {
-      return `An ${lodash.lowerCase(word)}`
-    } else {
-      return `A ${lodash.lowerCase(word)}`
-    }
-  });
-
 
   eleventyConfig.addPassthroughCopy({
     'src/fonts': './fonts',

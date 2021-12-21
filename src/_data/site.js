@@ -34,7 +34,7 @@ let siteData = {
     allowRobots: true,
     minifyCSS: true,
     inlineCSS: true,
-    minifyInline_HTML_JS_CSS: true,
+    minify_inline_HTML_CSS_JS: true,
   },
   staging: {
     domain: 'staging-full-start.netlify.app',
@@ -45,7 +45,7 @@ let siteData = {
     allowRobots: false,
     minifyCSS: false,
     inlineCSS: false,
-    minifyInline_HTML_JS_CSS: false,
+    minify_inline_HTML_CSS_JS: false,
   },
   production: {
     domain: 'full-start.netlify.app',
@@ -56,7 +56,7 @@ let siteData = {
     allowRobots: true,
     minifyCSS: true,
     inlineCSS: true,
-    minifyInline_HTML_JS_CSS: true,
+    minify_inline_HTML_CSS_JS: true,
   },
   currentYear: new Date().getFullYear(),
   currentDate: new Date(),
