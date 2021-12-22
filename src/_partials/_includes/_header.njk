@@ -3,7 +3,7 @@
     {# ------------- logo ------------- #}
     <div class="relative flex items-center justify-between h-16 lg:items-end" >
       {{ '<a href="/">' | safe if page.url != '/'  }}
-      <img class="w-auto h-16"  src="/images/logo-with-strapline.svg" alt="Logo">
+      {% inlineSVG './src/images/logo-with-strapline.svg', { class: "w-auto h-16" } %}
       {{ '</a>' | safe if page.url != '/' }}
       {# ------------- menu ------------- #}
       <div id="navItems">

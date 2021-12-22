@@ -2,9 +2,9 @@ const lodash = require("lodash");
 const { DateTime } = require("luxon");
 const util = require('util');
 const htmlmin = require("html-minifier");
-
-// load the site configuration files
-const site = require('./src/_data/site.js')
+const cheerio = require('cheerio');
+const fs = require('fs')
+const site = require('./src/_data/site.js') // load the site configuration files
 
 
 // ------------- Eleventy Functions -------------
@@ -54,10 +54,43 @@ const addAnOrA = (word) => {
 }
 
 
+// inline SVG
+const inlineSVG = async (fileName, options) => {
+
+  let svgOptions  = options || {}
+  let className  = svgOptions.class || ''
+
+  console.log(svgOptions);
+
+  // read the SVG 
+  const svgData = fs.readFileSync(fileName, 'utf8');
+  
+  //parse it with cheerio
+  const $ = cheerio.load(svgData, {
+    xmlMode: true
+  });
+
+  // Add class if it is given. 
+  $('svg').addClass(className);
+
+  // Remove <title></title> as it can screw SEO
+  $('title').remove();
+
+  // Remove height and width attributes
+  $('svg').removeAttr("width");
+  $('svg').removeAttr("height");
+  
+  return $.html();
+}
+
+
 // ------------- End of Eleventy Functions -------------
 
 
 module.exports = (eleventyConfig) => {
+
+  eleventyConfig.addAsyncShortcode('inlineSVG', inlineSVG);
+  
   // compress the html and inline CSS & JS
   eleventyConfig.addTransform("htmlmin", htmlminifer);
   
