@@ -32,9 +32,9 @@ let siteData = {
     createSitemap: true,
     allowIndexing: true,
     allowRobots: true,
-    minifyCSS: true,
-    inlineCSS: true,
-    minify_inline_HTML_CSS_JS: true,
+    minifyCSS: false,
+    inlineCSS: false,
+    minify_inline_HTML_CSS_JS: false,
   },
   staging: {
     domain: 'staging-full-start.netlify.app',
