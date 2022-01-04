@@ -55,12 +55,17 @@ const addAnOrA = (word) => {
 
 
 // inline SVG
+// use with:  {% inlineSVG './path/to/your.svg', { class: "yourClass anotherClass" } %}
 const inlineSVG = async (fileName, options) => {
-
   let svgOptions  = options || {}
   let className  = svgOptions.class || ''
+  let id  = svgOptions.id || ''
+  let title  = svgOptions.alt || ''
 
-  console.log(svgOptions);
+
+ 
+
+
 
   // read the SVG 
   const svgData = fs.readFileSync(fileName, 'utf8');
@@ -70,11 +75,18 @@ const inlineSVG = async (fileName, options) => {
     xmlMode: true
   });
 
+
+
   // Add class if it is given. 
   $('svg').addClass(className);
 
-  // Remove <title></title> as it can screw SEO
-  $('title').remove();
+  // Add ID if given
+  $('svg').attr("id",id);
+
+  $('title').remove(); // get rid of any titles. 
+  $('svg').prepend(`<title>${title}</title>`);   
+
+
 
   // Remove height and width attributes
   $('svg').removeAttr("width");
@@ -88,7 +100,8 @@ const inlineSVG = async (fileName, options) => {
 
 
 module.exports = (eleventyConfig) => {
-
+ 
+  // inline SVG
   eleventyConfig.addAsyncShortcode('inlineSVG', inlineSVG);
   
   // compress the html and inline CSS & JS
