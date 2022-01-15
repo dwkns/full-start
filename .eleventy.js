@@ -104,16 +104,19 @@ const inlineSVG = async (fileName, options) => {
 
 module.exports = (eleventyConfig) => {
 
+
+  // custom collection with pagination for every category
   eleventyConfig.addCollection("allPosts", (collectionApi) => {
 
-    let numberOfresultsPerPage = 2
+    // how many items per page should we load
+    let numberOfresultsPerPage = site.paginationItemsPerPage
 
-
-    // Create a collection of posts that have the content.isPost flag
+    // Create a collection of posts that have the content.isPost flag set to true
     // Could use any method to choose which posts you include.
+
     // Create an array of all the catefory and types names
     let categories = []
-    let types = []
+    let types = [] // not currently using types.
 
     // Filter all the posts getAall() returning those that have content.isPost key
     let allPosts = collectionApi.getAll().filter((item) => {
@@ -123,7 +126,12 @@ module.exports = (eleventyConfig) => {
         types.push(item.data.contentMetadata.type) // record the type
         return (item.data.contentMetadata.isPost) ? item : false
       }
-    });
+    }).sort( (a, b) => {
+      //sort the results. Latest date at the top.
+      return b.data.contentMetadata.publishDate - a.data.contentMetadata.publishDate; // sort by date - descending
+    });;
+
+
 
     // Make the categories uniquie
     let uniqueCategories = [...new Set(categories)];
@@ -183,8 +191,8 @@ module.exports = (eleventyConfig) => {
 
       // loop each set of chunked posts
       category.chunkedPosts.forEach((post, index) => {
-        isFirstPage = index == 0 ? true : false;
-        isLastPage = category.chunks == index + 1 ? true : false;
+        isFirstPage = (index == 0) ? true : false;
+        isLastPage = (category.numberOfPagesOfArticles == index + 1) ? true : false;
 
         // contruct the output object
         blogpostsByCategories.push({

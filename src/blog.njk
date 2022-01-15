@@ -26,4 +26,59 @@ pagination:
       <span class="inline-flex px-2 mt-4 text-sm bg-red-800 rounded-lg text-zinc-50">{{ post.data.contentMetadata.category  }}</span>
     </article>
 {% endfor %}
+
+{%- set baseURL = '/blog' -%}
+
+{% if allPosts.totalPages > 1 %}
+  <div class="flex flex-row mb-24">
+    <div class="flex-none w-1/5 ">
+      <div class="flex flex-col pt-4 place-items-center">
+        {% if allPosts.isFirstPage %}
+          <div class="w-24 inactive-button">Previous</div>
+        {% else %}
+          <a href="{{baseURL}}{{ allPosts.pageSlugs.previous }}">
+            <div class="w-24 px-4 primary-button">Previous</div>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="flex-grow">
+      <div class="flex flex-col place-items-center">
+        <ul class="flex flex-row flex-wrap space-x-4 space-y-4">
+          {% for pageEntry in allPosts.pageSlugs.all %}
+   
+            {# does the widget match the current page? #}
+            {% if allPosts.currentPage == loop.index %}
+              <li class="w-12 {{ 'ml-4 mt-4' if loop.first }} inactive-button" aria-current="page">
+                {{ loop.index }}</li>
+            {% else %}
+              <a href="{{baseURL}}{{ allPosts.pageSlugs.all[loop.index - 1] }}" class="">
+                <li class="w-12 {{ 'ml-4 mt-4' if loop.first }} primary-button">
+                  {{ loop.index }}</li>
+              </a>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="flex-none w-1/5 ">
+      <div class="flex flex-col pt-4 place-items-center">
+        {% if allPosts.isLastPage %}
+          <div class="w-24 inactive-button">Next</div>
+        {% else %}
+          <a href="{{baseURL}}{{ allPosts.pageSlugs.next }}/">
+            <div class="w-24 primary-button">Next</div>
+          </a>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+  {{allPosts.isLastPage}}
+  {{allPosts.isFirstPage}}
+  {% endif %}
+
+
+
 </section>

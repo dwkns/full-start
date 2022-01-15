@@ -14,7 +14,7 @@ contentMetadata:
   type: 'Paper'
   category: 'SEO' 
   author: 'Darrell Wilkins'
-  publishDate: 2021-10-18
+  publishDate: 2021-10-19
   tags:
     - tag 1
     - tag 2

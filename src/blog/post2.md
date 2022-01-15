@@ -14,7 +14,7 @@ contentMetadata:
   type: 'Paper'
   category: 'Strategy' 
   author: 'Darrell Wilkins'
-  publishDate: 2021-10-18
+  publishDate: 2021-10-20
   tags:
     - tag 2
     - tag 3

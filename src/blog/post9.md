@@ -14,7 +14,7 @@ contentMetadata:
   type: 'Article'
   category: 'Tech' 
   author: 'Darrell Wilkins'
-  publishDate: 2021-10-18
+  publishDate: 2021-10-27
   tags:
     - tag 2
     - tag 3

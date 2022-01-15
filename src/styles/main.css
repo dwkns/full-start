@@ -40,4 +40,19 @@
       text-decoration-line: underline;
       text-decoration-color: var(--brand);
     }
+
+
+    .primary-button {
+      @apply px-8 py-2 text-base font-semibold rounded-xl bg-pink-200 text-center cursor-pointer
+    }
+    
+    .primary-button:hover {
+      @apply bg-lime-300
+    }
+    
+    
+    .inactive-button {
+      @apply px-4 py-2 font-bold rounded-xl text-black text-center 
+    }
+
 }
