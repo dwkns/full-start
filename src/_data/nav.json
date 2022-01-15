@@ -9,6 +9,14 @@
     },
     
     {
+      "name": "Blog",
+      "description": "What we think",
+      "url": "/blog/",
+      "showInMainNav": true,
+      "showInFooter": false,
+      "width": 48
+    },
+    {
       "name": "About us",
       "description": "Learn about us",
       "url": "/about-us/",

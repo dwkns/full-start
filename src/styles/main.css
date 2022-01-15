@@ -33,12 +33,11 @@
 }
 
 @layer utilities {
-  @variants responsive {
+  
     .hover-link:hover {
       cursor: pointer;
       text-decoration-thickness: 4px;
       text-decoration-line: underline;
       text-decoration-color: var(--brand);
     }
-  }
 }

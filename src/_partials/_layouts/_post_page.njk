@@ -1,0 +1,19 @@
+---
+layout: _page_skeleton.njk
+---
+<header class="mx-auto max-w-screen-3xl px-u2-pad">
+  {% include '_includes/_header.njk' %}
+</header>
+<main class="">
+  <section class="mx-auto mt-24 max-w-screen-3xl px-u2-pad">
+  <p class="my-2"> ← <a href="/blog/" class="underline hover:font-extrabold">All posts</a></p>
+    <h1 class="mt-8 text-4xl">{{title}}</h1>
+    <p class="">An <span class="font-semibold text-gray-700">{{contentMetadata.type}}</span> in <span class="font-semibold text-gray-700">{{contentMetadata.category}}</span> by <span class="font-semibold text-gray-700">{{contentMetadata.author}}</span> on <span class="font-semibold text-gray-700">{{contentMetadata.publishDate | readableDate}}</span></p>
+  </section>
+  <section class="mx-auto mt-12 max-w-screen-3xl px-u2-pad">
+    {{ content | safe }}
+  </section>
+</main>
+<footer class="mx-auto mt-12 max-w-screen-3xl px-u2-pad">
+  {% include '_includes/_footer.njk' %}
+</footer>
