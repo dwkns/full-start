@@ -25,7 +25,7 @@ let siteData = {
     default_og_image: '/images/default_og_image.png',
     default_og_type: 'article'
   },
-  paginationItemsPerPage: 5,
+  paginationItemsPerPage: 12,
   development: {
     domain: 'localhost',
     baseURL: 'https://localhost:8080',
