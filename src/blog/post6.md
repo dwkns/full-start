@@ -12,7 +12,7 @@ eleventyComputed:
 contentMetadata:
   isPost: true
   type: 'Article'
-  category: 'Strategy' 
+  category: 'AA' 
   author: 'Darrell Wilkins'
   publishDate: 2021-10-24
   tags:

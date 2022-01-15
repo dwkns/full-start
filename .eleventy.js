@@ -5,7 +5,8 @@ const htmlmin = require("html-minifier");
 const cheerio = require('cheerio');
 const fs = require('fs')
 const site = require('./src/_data/site.js') // load the site configuration files
-const slugify = require('slugify')
+const slugify = require('slugify');
+const { lowerFirst } = require("lodash");
 
 
 // ------------- Eleventy Functions -------------
@@ -65,11 +66,6 @@ const inlineSVG = async (fileName, options) => {
   let id = svgOptions.id || ''
   let title = svgOptions.alt || ''
 
-
-
-
-
-
   // read the SVG 
   const svgData = fs.readFileSync(fileName, 'utf8');
 
@@ -77,8 +73,6 @@ const inlineSVG = async (fileName, options) => {
   const $ = cheerio.load(svgData, {
     xmlMode: true
   });
-
-
 
   // Add class if it is given. 
   $('svg').addClass(className);
@@ -99,6 +93,175 @@ const inlineSVG = async (fileName, options) => {
 }
 
 
+    // **********
+    // Create a collection of posts that have the content.isPost flag set to true
+    // Posts are grouped by content.category
+    // Each category is paginated.
+    // Additional data is returned to make UI easier to build such as:
+    //  - isFirstPage/isLastPage/currentPage — which page of results you are on.
+    //  - numberOfPages — how many results pages there are
+    //  - numberOfPosts — total number of posts in a current category
+    //  - categoryData — meta info about all the categories
+
+const blogPostsByCategories = (collectionApi)=> {
+
+  // how many items per page should we load
+  let numberOfresultsPerPage = site.paginationItemsPerPage
+
+  // Create an array of all the catefory and types names
+  let categories = []
+  let types = [] // not currently using types.
+
+
+  // Filter all the posts using getAall() returning those that have content.isPost key
+  let allPosts = collectionApi.getAll().filter((item) => {
+    
+    // check the content object is present to avoid trying to read non-existant properties
+    if (item.data.contentMetadata) { 
+      categories.push(item.data.contentMetadata.category) // record the category
+      types.push(item.data.contentMetadata.type) // record the type
+      return (item.data.contentMetadata.isPost) ? item : false
+    }
+  }).sort((a, b) => {
+    //sort the results. Latest date at the top.
+    return b.data.contentMetadata.publishDate - a.data.contentMetadata.publishDate; 
+  });;
+
+
+  // Make the categories uniquie
+  let uniqueCategories = [...new Set(categories)];
+  let uniqueTypes = [...new Set(types)]; // not currently using types
+
+
+  uniqueCategories.push('All') // Add and All Category 
+  
+  // Remove any null /empty values — avoids errors if contentMeta.category is blank
+  uniqueCategories = uniqueCategories.filter(n => n) 
+
+
+  // Build a list of all posts sorted into categories.
+  let pageDataForAllCategories = []
+  let categoryData = []
+
+  // loop over the unique catefories
+  uniqueCategories.forEach((categoryName) => {
+
+    let allPostinCurrentCategory = [];
+
+    // add all the posts that are in the current category.
+    allPosts.forEach((post) => {
+      if (post.data.contentMetadata.category == categoryName || categoryName == 'All' ) {
+        allPostinCurrentCategory.push(post);
+      }
+    });
+
+    // chunk up all the posts in this category by the number of results/page we want. 
+    let chunks = lodash.chunk(allPostinCurrentCategory, numberOfresultsPerPage)
+
+    // create a slug for the category
+    let slug = (categoryName != 'All') ? `/${slugify(categoryName, { lower: true })}` : '/'
+
+
+    // create an array of pageSlugs for each chunk of posts
+    let pagesSlugs = [];
+    for (let i = 0; i < chunks.length; i++) {
+      let pageSlug = '';
+      // If there is more than one page of results.
+      if (i > 0) {
+        pageSlug = (slug == '/') ? `/${i + 1}` : `${slug}/${i + 1}`;
+      } else {
+        pageSlug = `${slug}`;
+      }
+
+      pagesSlugs.push(`${pageSlug}`);
+    }
+
+    // construct an simple categoryData object to be passed to page to make UI easier.
+    categoryData.push(
+      {
+        name: categoryName,
+        slug: slug,
+        numberOfPosts: allPostinCurrentCategory.length
+      }
+    )
+
+    pageDataForAllCategories.push({
+      name: categoryName,
+      posts: allPostinCurrentCategory,
+      chunkedPosts: chunks,
+      numberOfPosts: allPostinCurrentCategory.length,
+      numberOfPagesOfPosts: chunks.length,
+      pagesSlugs: pagesSlugs,
+    })
+
+
+  });
+
+
+  // Sort the categoryData alphabetically ensuring All is first.
+
+  // Store the All Category
+  var allCategory = categoryData.find(obj => {
+    return obj.name === 'All'
+  })
+
+  // Remove the All Category so it doesn't get sorted.
+  let sortedCategoryData = lodash.reject(categoryData, (item) => {
+    return item.name === "All"
+  })
+
+  //sort the rest of the categories alphabetically 
+  sortedCategoryData.sort((a, b) => a.name.localeCompare(b.name));
+
+  // Add the All Category back in at the start of the list
+  sortedCategoryData.unshift(allCategory)
+
+  
+
+  let blogPostsByCategories = [];
+
+
+  pageDataForAllCategories.forEach((category) => {
+  
+    let pagesSlugs = category.pagesSlugs;
+
+    // loop each of the chunked posts
+    category.chunkedPosts.forEach((post, index) => {
+      
+      // set some properties useful in the UI
+      isFirstPage = (index == 0) ? true : false;
+      isLastPage = (category.numberOfPagesOfPosts == index + 1) ? true : false;
+
+      // contruct the pagination object and add to blogPostsByCategories Arrau
+      blogPostsByCategories.push({
+        name: category.name,
+
+        // contructs the pageslugs needed for pagination controls.
+        pageSlugs: {
+          all: pagesSlugs,
+          next: pagesSlugs[index + 1] || null,
+          previous: pagesSlugs[index - 1] || null,
+          first: pagesSlugs[0] || null,
+          last: pagesSlugs[pagesSlugs.length - 1] || null,
+          count: pagesSlugs.length,
+        },
+        slug: pagesSlugs[index],
+        totalPages: category.numberOfPagesOfPosts, // total number of pages of posts
+        numberOfPosts: category.numberOfPosts, // total number of posts in this category
+        isFirstPage: isFirstPage, // true if this is first chunk/page of results.
+        isLastPage: isLastPage, // true if this is last chunk/page of results.
+        currentPage: index + 1, // the current page (useful for UI)
+        categoryData: sortedCategoryData, // data about all the categories
+        items: post, // the posts in this chunk
+        allPosts: category.posts // all the posts in this category.
+      })
+    })
+  })
+
+  return blogPostsByCategories
+}
+
+
 // ------------- End of Eleventy Functions -------------
 
 
@@ -106,119 +269,7 @@ module.exports = (eleventyConfig) => {
 
 
   // custom collection with pagination for every category
-  eleventyConfig.addCollection("allPosts", (collectionApi) => {
-
-    // how many items per page should we load
-    let numberOfresultsPerPage = site.paginationItemsPerPage
-
-    // Create a collection of posts that have the content.isPost flag set to true
-    // Could use any method to choose which posts you include.
-
-    // Create an array of all the catefory and types names
-    let categories = []
-    let types = [] // not currently using types.
-
-    // Filter all the posts getAall() returning those that have content.isPost key
-    let allPosts = collectionApi.getAll().filter((item) => {
-      // check the content object is present
-      if (item.data.contentMetadata) {
-        categories.push(item.data.contentMetadata.category) // record the category
-        types.push(item.data.contentMetadata.type) // record the type
-        return (item.data.contentMetadata.isPost) ? item : false
-      }
-    }).sort( (a, b) => {
-      //sort the results. Latest date at the top.
-      return b.data.contentMetadata.publishDate - a.data.contentMetadata.publishDate; // sort by date - descending
-    });;
-
-
-
-    // Make the categories uniquie
-    let uniqueCategories = [...new Set(categories)];
-    let uniqueTypes = [...new Set(types)];
-
-    // Add All to both Categories and Types
-    uniqueCategories.push('all')
-    uniqueCategories = uniqueCategories.filter(n => n) // remove any null /empty values
-
-
-    // Build a list of all posts sorted into categories.
-
-    let categoryData = []
-    uniqueCategories.forEach((categoryName) => {
-      let allPostinCurrentCategory = [];
-      allPosts.forEach((post) => {
-        // console.log(`${categoryName} >> ${post.data.contentMetadata.category}`);
-        if (post.data.contentMetadata.category == categoryName) {
-          //add post to list
-          allPostinCurrentCategory.push(post);
-        } else if (categoryName == 'all') {
-          allPostinCurrentCategory.push(post);
-        }
-      });
-
-      let chunks = lodash.chunk(allPostinCurrentCategory, numberOfresultsPerPage)
-
-      let slug = (categoryName != 'all') ? `/${slugify(categoryName, { lower: true })}` : '/'
-      let pagesSlugs = [];
-      // add those slugs to the pseudoCategory object.
-      for (let i = 0; i < chunks.length; i++) {
-        let pageSlug = '';
-        // If there is more than one page of results.
-        if (i > 0) {
-          pageSlug = (slug == '/') ? `/${i + 1}` : `${slug}/${i + 1}`;
-        } else {
-          pageSlug = `${slug}`;
-        }
-
-        pagesSlugs.push(`${pageSlug}`);
-      }
-
-      categoryData.push({
-        name: categoryName,
-        posts: allPostinCurrentCategory,
-        chunkedPosts: chunks,
-        numberOfArticles: allPostinCurrentCategory.length,
-        numberOfPagesOfArticles: chunks.length,
-        pagesSlugs: pagesSlugs
-      })
-    });
-
-    let blogpostsByCategories = [];
-    // loop over each category
-    categoryData.forEach((category) => {
-      let pagesSlugs = category.pagesSlugs;
-
-      // loop each set of chunked posts
-      category.chunkedPosts.forEach((post, index) => {
-        isFirstPage = (index == 0) ? true : false;
-        isLastPage = (category.numberOfPagesOfArticles == index + 1) ? true : false;
-
-        // contruct the output object
-        blogpostsByCategories.push({
-          name: category.name,
-
-          pageSlugs: {
-            all: pagesSlugs,
-            next: pagesSlugs[index + 1] || null,
-            previous: pagesSlugs[index - 1] || null,
-            first: pagesSlugs[0] || null,
-            last: pagesSlugs[pagesSlugs.length - 1] || null,
-            count: pagesSlugs.length,
-          },
-          slug: pagesSlugs[index],
-          pageNumber: index,
-          totalPages: category.numberOfPagesOfArticles,
-          isFirstPage: isFirstPage,
-          isLastPage: isLastPage,
-          currentPage: index + 1,
-          items: post
-        })
-      })
-    })
-
-    return blogpostsByCategories
-  })
+  eleventyConfig.addCollection("allPosts", blogPostsByCategories )
 
 
   eleventyConfig.addFilter('createOGImageFileName', (permalink) => {

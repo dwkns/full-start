@@ -13,72 +13,118 @@ pagination:
   size: 1
   alias: allPosts
 ---
-<section class="mx-auto my-24 max-w-screen-3xl px-u2-pad">
-  <h1 class="text-4xl">{{title}}</h1>
-
- {%- for post in allPosts.items %}
-    <article class="px-4 py-8 mt-4 bg-gray-300 rounded-xl">
-      <a href="{{ post.url }}">
-        <h2 class="mt-0 text-2xl hover-link"> {{ post.data.title }}</h2>
-      </a>
-      <p class="mt-4 text-sm">On {{ post.data.contentMetadata.publishDate | readableDate }}</p>
-      <span class="inline-flex px-2 mt-4 text-sm bg-indigo-800 rounded-lg text-zinc-50">{{ post.data.contentMetadata.type }}</span>
-      <span class="inline-flex px-2 mt-4 text-sm bg-red-800 rounded-lg text-zinc-50">{{ post.data.contentMetadata.category  }}</span>
-    </article>
-{% endfor %}
+{%- set inactive = 'flex items-center justify-center pt-1 mx-1 text-white border bg-green-200 border-green-200 border-solid rounded-full' -%}
+{%- set  selected = 'flex items-center justify-center pt-1 mx-1 border border-green-500 border-solid rounded-full cursor-default' -%}
+{%- set button = 'flex items-center justify-center pt-1 mx-1 text-white bg-green-500 border border-green-500 border-solid rounded-full hover:text-green-500 hover:bg-white' -%}
 
 {%- set baseURL = '/blog' -%}
 
-{% if allPosts.totalPages > 1 %}
-  <div class="flex flex-row mb-24">
-    <div class="flex-none w-1/5 ">
-      <div class="flex flex-col pt-4 place-items-center">
-        {% if allPosts.isFirstPage %}
-          <div class="w-24 inactive-button">Previous</div>
-        {% else %}
-          <a href="{{baseURL}}{{ allPosts.pageSlugs.previous }}">
-            <div class="w-24 px-4 primary-button">Previous</div>
-          </a>
-        {% endif %}
-      </div>
+<section class="mx-auto my-24 max-w-screen-3xl px-u2-pad">
+  <h1 class="text-4xl">{{title}}</h1>
+  {# <p class="">name:{{allPosts.name}}</p>
+  <p class="">isFirstPage:{{allPosts.isFirstPage}}</p>
+  <p class="">isLastPage:{{allPosts.isLastPage}}</p>
+  <p class="">currentPage:{{allPosts.currentPage}}</p>
+  <p class="">totalPages:{{allPosts.totalPages}}</p>
+  <p class="">categoryData:{{allPosts.categoryData |console|safe}}</p> #}
+
+  {# {{allPosts |console|safe}} #}
+  <ul class="flex mt-4 text-xs font-semibold leading-tight text-green-500">
+    {%- for category in allPosts.categoryData -%}
+      {%- if allPosts.name == category.name -%}
+        <li aria-current="page" class="px-4 h-10 {{selected}} ">{{category.name}} ({{category.numberOfPosts}})</li>
+      {%- else -%}
+        <li>
+          <a href="{{baseURL}}{{ category.slug if category.slug != '/' else ''}}/" class="flex px-4 h-10 {{button}}">{{category.name}} <span class="ml-2 text-green-200 text">({{category.numberOfPosts}})</span></a>
+        </li>
+      {%- endif -%}
+
+    {%- endfor -%}
+  </ul>
+
+  {{ post.data.uuid if post.data.uuid else absolutePostUrl }}
+
+  {%- for post in allPosts.items -%}
+    <article class="px-4 py-2 mt-4 bg-gray-300 rounded-xl">
+      <a href="{{ post.url }}">
+        <h2 class="mt-2 text-2xl hover-link">
+          {{ post.data.title }}</h2>
+      </a>
+      <p class="mt-2 text-sm">On {{ post.data.contentMetadata.publishDate | readableDate }}</p>
+      <span class="inline-flex px-2 mt-2 text-sm bg-indigo-800 rounded-lg text-zinc-50">{{ post.data.contentMetadata.type }}</span>
+      <span class="inline-flex px-2 mt-2 text-sm bg-red-800 rounded-lg text-zinc-50">{{ post.data.contentMetadata.category  }}</span>
+    </article>
+  {%- endfor -%}
+
+  {%- if allPosts.totalPages > 1 -%}
+
+    <div class="flex justify-center mt-4 text-xs font-semibold leading-tight text-green-500">
+      {%- if allPosts.isFirstPage -%}
+        <p class="w-20 h-10 {{inactive}} mr-4">Previous</p>
+      {%- else -%}
+        {%- set slug = allPosts.pageSlugs.previous -%}
+        <a href="{{baseURL}}{{ slug if slug !='/' else '' }}/">
+          <div class="w-20 h-10 {{button}} mr-4">Previous</div>
+        </a>
+      {%- endif -%}
+
+      <ul class="flex">
+        {%- for pageEntry in allPosts.pageSlugs.all -%}
+          {%- if allPosts.currentPage == loop.index -%}
+            <li aria-current="page" class="w-10 h-10 {{selected}} ">{{ loop.index }}</li>
+          {%- else -%}
+            <li>
+              {%- set slug = allPosts.pageSlugs.all[loop.index - 1] -%}
+              <a href="{{baseURL}}{{ slug if slug !='/' else '' }}/" class="w-10 h-10 {{button}}">{{ loop.index }}</a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+
+      {%- if allPosts.isLastPage -%}
+        <div class="w-20 h-10 {{inactive}} ml-4">Next</div>
+      {%- else -%}
+        {%- set slug = allPosts.pageSlugs.next -%}
+        <a href="{{baseURL}}{{ slug if slug !='/' else '' }}/">
+          <div class="w-20 h-10 {{button}} ml-4">Next</div>
+        </a>
+      {%- endif -%}
     </div>
-    <div class="flex-grow">
-      <div class="flex flex-col place-items-center">
-        <ul class="flex flex-row flex-wrap space-x-4 space-y-4">
-          {% for pageEntry in allPosts.pageSlugs.all %}
-   
-            {# does the widget match the current page? #}
-            {% if allPosts.currentPage == loop.index %}
-              <li class="w-12 {{ 'ml-4 mt-4' if loop.first }} inactive-button" aria-current="page">
-                {{ loop.index }}</li>
-            {% else %}
-              <a href="{{baseURL}}{{ allPosts.pageSlugs.all[loop.index - 1] }}" class="">
-                <li class="w-12 {{ 'ml-4 mt-4' if loop.first }} primary-button">
-                  {{ loop.index }}</li>
-              </a>
-            {% endif %}
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-    <div class="flex-none w-1/5 ">
-      <div class="flex flex-col pt-4 place-items-center">
-        {% if allPosts.isLastPage %}
-          <div class="w-24 inactive-button">Next</div>
-        {% else %}
-          <a href="{{baseURL}}{{ allPosts.pageSlugs.next }}/">
-            <div class="w-24 primary-button">Next</div>
-          </a>
-        {% endif %}
-      </div>
 
-    </div>
-  </div>
-
-  {{allPosts.isLastPage}}
-  {{allPosts.isFirstPage}}
-  {% endif %}
-
-
-
+  {%- endif -%}
 </section>
+
+{# <ul class="flex text-xs font-semibold leading-tight">
+<li>
+<a href="#pablo" class="flex items-center justify-center w-10 h-10 px-0 pt-0.5 mx-1 text-white bg-green-500 border border-green-500 border-solid rounded-full first:ml-0">1</a>
+</li>
+<li>
+<a href="#pablo" class="flex items-center justify-center w-10 h-10 px-0 pt-0.5 mx-1 text-white bg-green-200 border border-green-200 border-solid rounded-full first:ml-0">2</a>
+</li>
+<li>
+<a href="#pablo" class="flex items-center justify-center w-10 h-10 px-0 pt-0.5 mx-1 text-green-500 bg-white border border-green-500 border-solid rounded-full first:ml-0">3</a>
+</li>
+
+</ul> #}
+
+{# 
+
+      <div class="flex-grow">
+        <div class="flex flex-col place-items-center">
+          <ul class="flex flex-row flex-wrap space-x-4 space-y-4">
+            {%- for pageEntry in allPosts.pageSlugs.all -%}
+
+
+              {%- if allPosts.currentPage == loop.index -%}
+                <li class="w-12 {{ 'ml-4 mt-4' if loop.first }} inactive-button" aria-current="page">
+                  {{ loop.index }}</li>
+              {%- else -%}
+                <a href="{{baseURL}}{{ allPosts.pageSlugs.all[loop.index - 1] }}" class="">
+                  <li class="w-12 {{ 'ml-4 mt-4' if loop.first }} primary-button">
+                    {{ loop.index }}</li>
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div> #}
