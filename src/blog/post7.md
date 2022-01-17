@@ -15,6 +15,8 @@ contentMetadata:
   category: 'SEO' 
   author: 'Darrell Wilkins'
   publishDate: 2021-10-25
+  coverImage:  
+  coverImageAlt:
   tags:
     - tag 2
     - tag 3

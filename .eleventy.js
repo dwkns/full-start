@@ -268,6 +268,8 @@ const blogPostsByCategories = (collectionApi)=> {
 module.exports = (eleventyConfig) => {
 
 
+
+
   // custom collection with pagination for every category
   eleventyConfig.addCollection("allPosts", blogPostsByCategories )
 
@@ -312,7 +314,10 @@ module.exports = (eleventyConfig) => {
   eleventyConfig.addFilter('console', logToHTML);
 
   // return a human readable date
+
   eleventyConfig.addFilter("readableDate", readableDate);
+
+
 
   // Prepend 'A' or 'An' depeding on the next word supplied
   eleventyConfig.addFilter("addAnOrA", addAnOrA);
