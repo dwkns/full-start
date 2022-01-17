@@ -17,8 +17,8 @@ permalink: /
   <p  class="text-sm font-black">And helps optimise the download</p>
 </section>
 <section class="mx-auto mt-12 max-w-screen-3xl px-u2-pad">
-  {% import "_components/_general.njk" as components with context %}
-  {{ components.fancyBlock()}}
+  {% from "_components/fancy-block/_macro.njk" import fancyBlock with context %}
+  {{ fancyBlock()}}
 </section>
 <script>
 let a = "bum"
