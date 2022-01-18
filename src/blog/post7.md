@@ -12,7 +12,7 @@ eleventyComputed:
 contentMetadata:
   isPost: true
   type: 'Article'
-  category: 'SEO' 
+  category: 'Tents' 
   author: 'Darrell Wilkins'
   publishDate: 2021-10-25
   coverImage:  
