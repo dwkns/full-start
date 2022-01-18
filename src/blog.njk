@@ -13,14 +13,12 @@ pagination:
   size: 1
   alias: allPosts
 ---
-{%- set inactive = 'flex items-center justify-center pt-1 mx-1 text-white border bg-green-200 border-green-200 border-solid rounded-full' -%}
-{%- set  selected = 'flex items-center justify-center pt-1 mx-1 border border-green-500 border-solid rounded-full cursor-default' -%}
-{%- set button = 'flex items-center justify-center pt-1 mx-1 text-white bg-green-500 border border-green-500 border-solid rounded-full hover:text-green-500 hover:bg-white' -%}
+{%- set inactive = 'flex items-center justify-center pt-1 mr-1 text-white border bg-green-200 border-green-200 border-solid rounded-full' -%}
+{%- set selected = 'flex items-center justify-center pt-1 mr-1 border border-green-500 border-solid rounded-full cursor-default' -%}
+{%- set button = 'flex items-center justify-center pt-1 mr-1 text-white bg-green-500 border border-green-500 border-solid rounded-full hover:text-green-500 hover:bg-white group' -%}
 
-
- {# {% import "_components/_cards/_postCard.njk" as postCard with context %} #}
- {% from "_components/post-card/_macro.njk" import postCard with context %}
- 
+{# {% import "_components/_cards/_postCard.njk" as postCard with context %} #}
+{% from "_components/post-card/_macro.njk" import postCard with context %}
 
 {%- set baseURL = '/blog' -%}
 
@@ -37,28 +35,24 @@ pagination:
   <p class="">totalPages:{{allPosts.totalPages}}</p>
   <p class="">categoryData:{{allPosts.categoryData |console|safe}}</p> #}
 
-  {# {{allPosts |console|safe}} #}
-  <ul class="flex mt-8 text-xs font-semibold leading-tight text-green-500">
-    {%- for category in allPosts.categoryData -%}
-      {%- if allPosts.name == category.name -%}
-        <li aria-current="page" class="px-4 h-10 {{selected}} ">{{category.name}} ({{category.numberOfPosts}})</li>
+  <ul class="flex mt-8 text-xs font-semibold leading-tight text-green-500 ">
+    {% for category, categoryData in allPosts.categoryData %}
+      {%- if category == allPosts.name -%}
+        <li aria-current="page" class="px-4 h-10 {{selected}} ">{{ category }}
+          <span class="ml-1 ">({{categoryData.numberOfPosts}})</span></li>
       {%- else -%}
         <li>
-          <a href="{{baseURL}}{{ category.slug if category.slug != '/' else ''}}/" class="flex px-4 h-10 {{button}}">{{category.name}}
-            <span class="ml-2 text-green-200 text">({{category.numberOfPosts}})</span></a>
+          <a href="{{baseURL}}{{ categoryData.slug if categoryData.slug != '/' else ''}}/" class="flex px-4 h-10 {{button}}">{{ category }}
+            <span class="ml-1 text-green-200 group-hover:text-green-500">({{categoryData.numberOfPosts}})</span></a>
         </li>
       {%- endif -%}
-
-    {%- endfor -%}
+    {% endfor %}
   </ul>
 
-<div class="grid grid-cols-12 gap-12 mt-8">
-  {%- for post in allPosts.items -%}
-
-  {# <div class="grid max-w-lg gap-5 mx-auto mt-12 lg:grid-cols-3 lg:max-w-none"> #}
-     
+  <p class="mt-4 text-sm text-zinc-600">{{ allPosts.categoryData[allPosts.name].numberOfPosts | pluralizeAfterNumber ( "Post" ) }} {{ "on "+allPosts.name if allPosts.name!="All" else 'in total'}}</p>
+  <div class="grid grid-cols-12 gap-12 mt-4">
+    {%- for post in allPosts.items -%}
       <article class="col-span-4">
-      {# {{post.data.contentMetadata.publishDate  }} #}
         {{postCard( 
         {
           imageUrl: "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
@@ -66,7 +60,7 @@ pagination:
           title :  post.data.title,
           summary :  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
           category : post.data.contentMetadata.category,
-          categorySlug: "/article/",
+          categorySlug: categorySlug+"/",
           type: post.data.contentMetadata.type,
           postUrl: post.url ,
           author: "Darrell Wilkins",
@@ -76,9 +70,9 @@ pagination:
           readTime: "6 min read"
         } 
         )}}
-    </article> 
-  {%- endfor -%}
-</div>
+      </article>
+    {%- endfor -%}
+  </div>
 
   {%- if allPosts.totalPages > 1 -%}
 

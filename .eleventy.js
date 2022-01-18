@@ -7,6 +7,7 @@ const fs = require('fs')
 const site = require('./src/_data/site.js') // load the site configuration files
 const slugify = require('slugify');
 const { lowerFirst } = require("lodash");
+const pluralize = require("pluralize");
 
 
 // ------------- Eleventy Functions -------------
@@ -93,17 +94,17 @@ const inlineSVG = async (fileName, options) => {
 }
 
 
-    // **********
-    // Create a collection of posts that have the content.isPost flag set to true
-    // Posts are grouped by content.category
-    // Each category is paginated.
-    // Additional data is returned to make UI easier to build such as:
-    //  - isFirstPage/isLastPage/currentPage — which page of results you are on.
-    //  - numberOfPages — how many results pages there are
-    //  - numberOfPosts — total number of posts in a current category
-    //  - categoryData — meta info about all the categories
+// **********
+// Create a collection of posts that have the content.isPost flag set to true
+// Posts are grouped by content.category
+// Each category is paginated.
+// Additional data is returned to make UI easier to build such as:
+//  - isFirstPage/isLastPage/currentPage — which page of results you are on.
+//  - numberOfPages — how many results pages there are
+//  - numberOfPosts — total number of posts in a current category
+//  - categoryData — meta info about all the categories
 
-const blogPostsByCategories = (collectionApi)=> {
+const blogPostsByCategories = (collectionApi) => {
 
   // how many items per page should we load
   let numberOfresultsPerPage = site.paginationItemsPerPage
@@ -115,16 +116,16 @@ const blogPostsByCategories = (collectionApi)=> {
 
   // Filter all the posts using getAall() returning those that have content.isPost key
   let allPosts = collectionApi.getAll().filter((item) => {
-    
+
     // check the content object is present to avoid trying to read non-existant properties
-    if (item.data.contentMetadata) { 
+    if (item.data.contentMetadata) {
       categories.push(item.data.contentMetadata.category) // record the category
       types.push(item.data.contentMetadata.type) // record the type
       return (item.data.contentMetadata.isPost) ? item : false
     }
   }).sort((a, b) => {
     //sort the results. Latest date at the top.
-    return b.data.contentMetadata.publishDate - a.data.contentMetadata.publishDate; 
+    return b.data.contentMetadata.publishDate - a.data.contentMetadata.publishDate;
   });;
 
 
@@ -134,9 +135,9 @@ const blogPostsByCategories = (collectionApi)=> {
 
 
   uniqueCategories.push('All') // Add and All Category 
-  
+
   // Remove any null /empty values — avoids errors if contentMeta.category is blank
-  uniqueCategories = uniqueCategories.filter(n => n) 
+  uniqueCategories = uniqueCategories.filter(n => n)
 
 
   // Build a list of all posts sorted into categories.
@@ -150,7 +151,7 @@ const blogPostsByCategories = (collectionApi)=> {
 
     // add all the posts that are in the current category.
     allPosts.forEach((post) => {
-      if (post.data.contentMetadata.category == categoryName || categoryName == 'All' ) {
+      if (post.data.contentMetadata.category == categoryName || categoryName == 'All') {
         allPostinCurrentCategory.push(post);
       }
     });
@@ -192,6 +193,7 @@ const blogPostsByCategories = (collectionApi)=> {
       numberOfPosts: allPostinCurrentCategory.length,
       numberOfPagesOfPosts: chunks.length,
       pagesSlugs: pagesSlugs,
+
     })
 
 
@@ -216,18 +218,28 @@ const blogPostsByCategories = (collectionApi)=> {
   // Add the All Category back in at the start of the list
   sortedCategoryData.unshift(allCategory)
 
-  
+  // we need a deep copy of the array to avoid circular references.
+  let deepCloneSortedCategoroes = JSON.parse(JSON.stringify(sortedCategoryData));
+
+  allcategoryData = {};
+  sortedCategoryData.forEach(category => {
+    category['sort'] = deepCloneSortedCategoroes
+    allcategoryData[category.name] = category
+  })
+
+  // console.log(allcategoryData);
+
 
   let blogPostsByCategories = [];
 
 
   pageDataForAllCategories.forEach((category) => {
-  
+
     let pagesSlugs = category.pagesSlugs;
 
     // loop each of the chunked posts
     category.chunkedPosts.forEach((post, index) => {
-      
+
       // set some properties useful in the UI
       isFirstPage = (index == 0) ? true : false;
       isLastPage = (category.numberOfPagesOfPosts == index + 1) ? true : false;
@@ -251,7 +263,7 @@ const blogPostsByCategories = (collectionApi)=> {
         isFirstPage: isFirstPage, // true if this is first chunk/page of results.
         isLastPage: isLastPage, // true if this is last chunk/page of results.
         currentPage: index + 1, // the current page (useful for UI)
-        categoryData: sortedCategoryData, // data about all the categories
+        categoryData: allcategoryData, // data about all the categories
         items: post, // the posts in this chunk
         allPosts: category.posts // all the posts in this category.
       })
@@ -271,7 +283,12 @@ module.exports = (eleventyConfig) => {
 
 
   // custom collection with pagination for every category
-  eleventyConfig.addCollection("allPosts", blogPostsByCategories )
+  eleventyConfig.addCollection("allPosts", blogPostsByCategories)
+
+  eleventyConfig.addFilter('pluralizeAfterNumber', (number, word) => {
+    return (number == 1) ? `${number} ${word}` : `${number} ${pluralize(word)}`
+  });
+
 
 
   eleventyConfig.addFilter('createOGImageFileName', (permalink) => {
