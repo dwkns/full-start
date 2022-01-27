@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@11ty/eleventy": "^1.0.0",
+    "@11ty/eleventy": "^1.0.1-canary.2",
     "@tailwindcss/forms": "^0.4.0",
     "@tailwindcss/typography": "^0.5.0",
     "alpinejs": "^3.7.1",
@@ -42,7 +42,8 @@
     "build:esbuild": "esbuild src/scripts/main.js --bundle --minify --sourcemap --outfile=dist/scripts/main.js",
     "build:eleventy": "NODE_ENV=production eleventy",
     "serve": "NODE_ENV=production npm-run-all clean -p build:* serve-static",
-    "serve-static": "npx serve dist"
+    "serve-static": "npx serve dist",
+    "tent": "npx serve dist"
   },
   "author": "dazza"
 }

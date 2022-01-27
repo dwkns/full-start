@@ -24,9 +24,7 @@ pagination:
 
 <section class="mx-auto my-24 max-w-screen-3xl px-u2-pad">
   <h1 class="text-4xl">{{title}}</h1>
-  <p class="w-3/6 mt-3 text-xl text-gray-500 sm:mt-4">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa libero labore natus atque, ducimus sed.
-        </p>
+  <p class="w-full mt-3 text-xl text-gray-500 md:w-3/6 sm:mt-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa libero labore natus atque, ducimus sed.</p>
 
   {# <p class="">name:{{allPosts.name}}</p>
   <p class="">isFirstPage:{{allPosts.isFirstPage}}</p>
@@ -35,7 +33,7 @@ pagination:
   <p class="">totalPages:{{allPosts.totalPages}}</p>
   <p class="">categoryData:{{allPosts.categoryData |console|safe}}</p> #}
 
-  <ul class="flex mt-8 text-xs font-semibold leading-tight text-green-500 ">
+  <ul class="hidden mt-8 text-xs font-semibold leading-tight text-green-500 md:flex ">
     {% for category, categoryData in allPosts.categoryData %}
       {%- if category == allPosts.name -%}
         <li aria-current="page" class="px-4 h-10 {{selected}} ">{{ category }}
@@ -50,9 +48,9 @@ pagination:
   </ul>
 
   <p class="mt-4 text-sm text-zinc-600">{{ allPosts.categoryData[allPosts.name].numberOfPosts | pluralizeAfterNumber ( "Post" ) }} {{ "on "+allPosts.name if allPosts.name!="All" else 'in total'}}</p>
-  <div class="grid grid-cols-12 gap-12 mt-4">
+  <div class="grid grid-cols-12 gap-8 mt-4 sm:gap-12">
     {%- for post in allPosts.items -%}
-      <article class="col-span-4">
+      <article class="col-span-12 sm:col-span-6 lg:col-span-4">
         {{postCard( 
         {
           imageUrl: "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
