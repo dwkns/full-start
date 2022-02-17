@@ -4,12 +4,12 @@ const debugScreens = require('tailwindcss-debug-screens');
 
 module.exports = {
   mode: 'jit',
-  purge: [
+  content: [
     './src/**/*.njk',
     './src/**/*.js',
     './src/**/*.md',
   ],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
     screens: {
       'sm': '640px',

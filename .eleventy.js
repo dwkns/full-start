@@ -132,7 +132,7 @@ module.exports = (eleventyConfig) => {
   eleventyConfig.addPassthroughCopy({
     'src/fonts': './fonts',
     'src/images': './images',
-    'src/styles/compiled.css': './styles/compiled.css'
+    'src/styles/compiled.css': './styles/compiled.css',
   });
 
   eleventyConfig.setDataDeepMerge(true);

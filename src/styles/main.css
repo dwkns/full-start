@@ -11,15 +11,6 @@
   unicode-range: U+000-5FF;
 }
 
-/* @font-face {
-  font-family: 'Inter';
-  font-display: optional;
-  src: url('/fonts/Inter.var.latin-subset.woff2') format('woff2 supports variations'),
-       url('/fonts/Inter.var.latin-subset.woff2') format('woff2-variations');
-  font-weight: 100 900;
-  font-stretch: 25% 151%;
-  unicode-range: U+000-5FF;
-} */
 
 @tailwind utilities;
 
@@ -32,13 +23,4 @@
     --brand-alt: rgb(23, 161, 23);
 }
 
-@layer utilities {
-  @variants responsive {
-    .hover-link:hover {
-      cursor: pointer;
-      text-decoration-thickness: 4px;
-      text-decoration-line: underline;
-      text-decoration-color: var(--brand);
-    }
-  }
-}
+  
