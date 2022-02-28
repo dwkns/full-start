@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-let siteData = {
+let site = {
   name: "comapny name",
   locale: "en_GB",
   legalName: "comapny name ltd",
@@ -64,4 +64,4 @@ let siteData = {
   currentEnv: process.env.CURRENT_ENV
 
 }
-module.exports = siteData
+module.exports = site
