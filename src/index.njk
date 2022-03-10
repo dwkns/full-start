@@ -9,6 +9,16 @@ noindex:
 sitemap:
 permalink: /
 ---
+<script type="module" src="/lib/components/my-elements.js"></script>
+
+<section class="mx-auto mt-12 max-w-screen-3xl px-u2-pad">
+  <my-element>
+    <p class="">this apears if the element doesn't</p>
+  </my-element>
+</section>
+
+
+
 <section class="mx-auto mt-12 max-w-screen-3xl px-u2-pad">
   <p  class="text-5xl font-thin">This starter uses a variable font</p>
   <p  class="text-4xl font-bold">This allows</p>
@@ -21,6 +31,6 @@ permalink: /
   {{ fancyBlock()}}
 </section>
 <script>
-let a = "bum"
-console.log('bum',a);
+  let a = "bum"
+  console.log('bum', a);
 </script>

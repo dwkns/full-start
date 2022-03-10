@@ -334,7 +334,7 @@ module.exports = (eleventyConfig) => {
 
   eleventyConfig.addFilter("readableDate", readableDate);
 
-
+  
 
   // Prepend 'A' or 'An' depeding on the next word supplied
   eleventyConfig.addFilter("addAnOrA", addAnOrA);
@@ -355,7 +355,8 @@ module.exports = (eleventyConfig) => {
   eleventyConfig.addPassthroughCopy({
     'src/fonts': './fonts',
     'src/images': './images',
-    'src/styles/compiled.css': './styles/compiled.css'
+    'src/styles/compiled.css': './styles/compiled.css',
+    'src/lib/components/': './lib/components/'
   });
 
   eleventyConfig.setDataDeepMerge(true);
