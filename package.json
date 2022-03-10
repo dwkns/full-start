@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@11ty/eleventy": "v1.0.1-canary.2",
+    "@11ty/eleventy": "2.0.0-canary.2",
     "@tailwindcss/forms": "^0.4.0",
     "@tailwindcss/typography": "^0.5.2",
     "alpinejs": "^3.4.2",
