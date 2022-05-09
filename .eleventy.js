@@ -4,10 +4,9 @@ const util = require('util');
 const htmlmin = require("html-minifier");
 const cheerio = require('cheerio');
 const fs = require('fs')
-const site = require('./src/_data/site.js') // load the site configuration files
 const slugify = require('slugify');
-const { lowerFirst } = require("lodash");
 const pluralize = require("pluralize");
+const site = require('./src/_data/site.js') // load the site configuration files
 
 
 // ------------- Eleventy Functions -------------
@@ -359,6 +358,12 @@ module.exports = (eleventyConfig) => {
   });
 
   eleventyConfig.setDataDeepMerge(true);
+
+  eleventyConfig.setServerOptions({
+ // Show local network IP addresses for device testing
+    showAllHosts: true,
+
+  });
 
   return {
     dir: {
