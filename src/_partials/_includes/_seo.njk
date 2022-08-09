@@ -1,5 +1,5 @@
 <meta name="description" content="{{ description or metadata.description}}">
-<link rel="canonical" href="{{ canonical  or site[site.currentEnv].baseURL + page.url }}">
+    <link rel="canonical" href="{{ canonical or site[site.currentEnv].baseURL + page.url }}">
 {# Indexing 
   noindex in front matter can be: 
     true — page will not be indexed
@@ -13,10 +13,10 @@
 {%- set noIndexValue =  'index' if noindex == false else noIndexValue -%}
 {# Turn indexing on/off based on the enviroment #}
 {%- if site[site.currentEnv].allowIndexing -%}
-  <meta name="robots" content="{{ noIndexValue }}">
+        <meta name="robots" content="{{ noIndexValue }}">
 {%- else  -%}
-  <meta name="robots" content="noindex">
-  <meta name="robotsOnProductionWillBe" content="{{ noIndexValue }}">
+    <meta name="robots" content="noindex">
+    <meta name="robotsOnProductionWillBe" content="{{ noIndexValue }}">
 {%- endif -%}
 {% set ldJSON %}{
       "@context": "https://schema.org",
@@ -38,9 +38,9 @@
         "{{ site.linkedInURL }}", 
         "{{ site[site.currentEnv].baseURL }}"]
     }{% endset %}
-<script type="application/ld+json">
-  {{ ldJSON | safe }}
-</script>
+    <script type="application/ld+json"> 
+      {{ ldJSON | safe }}
+    </script>
 {#- Robots values
   Noindex: Tells a search engine not to index a page.
   Index: Tells a search engine to index a page. Note that you don’t need to add this meta tag; it’s the default.

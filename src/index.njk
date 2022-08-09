@@ -10,13 +10,8 @@ sitemap: false
 permalink: /
 ---
 {%- from "_njk_components/components.njk" import component -%}
-{# Import all components  optional: ignore missing #}
 <section class="dwkns-mt">
   <div class="dwkns-container">
-    <h1  class="text-4xl ">{{title}}</h1>
-    {{ component('simple-block', {
-        title: 'From the Simple Block Component'
-      })
-    }}
+    {{ component('page-header', { title: title } )}}
   </div>
 </section>

@@ -5,7 +5,9 @@ permalink: /contact/
 noindex: 
 sitemap: 
 ---
-<section class="mx-auto my-24 max-w-screen-3xl px-u2-pad">
-  <p  class="text-5xl font-thin">Contact</p>
-
+{%- from "_njk_components/components.njk" import component -%}
+<section class="dwkns-mt">
+  <div class="dwkns-container">
+    {{ component('page-header', { title: title } )}}
+  </div>
 </section>

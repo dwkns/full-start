@@ -9,3 +9,4 @@ command = "yarn start"
 # for = "/*"
 #   [headers.values]
 #   Content-Security-Policy = "default-src 'unsafe-eval'; script-src:  'unsafe-inline'; style-src  'unsafe-inline' ;"
+# Or look at _headers.njk

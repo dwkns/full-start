@@ -8,16 +8,6 @@
       "type": "link",
       "width": 48
     },
-    
-    {
-      "name": "Blog",
-      "description": "What we think",
-      "url": "/blog/",
-      "showInMainNav": true,
-      "type": "link",
-      "showInFooter": false,
-      "width": 48
-    },
     {
       "name": "About us",
       "description": "Learn about us",
@@ -26,8 +16,16 @@
       "type": "link",
       "showInFooter": false,
       "width": 48
+    }, 
+    {
+      "name": "Post Page",
+      "description": "What we think",
+      "url": "/post-page/",
+      "showInMainNav": true,
+      "type": "link",
+      "showInFooter": false,
+      "width": 48
     },
-   
     {
       "name": "Contact",
       "description": "Get in touch",

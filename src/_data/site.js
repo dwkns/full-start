@@ -15,6 +15,8 @@ let site = {
     postalCode: "default_postalCode",
     addressCountry: "default_addressCountry"
   },
+  themeColor:  '#93C5FD',
+  backgroundColor:  '#93C5FD',
   twitterURL: "https://twitter.com/yourTwitter",
   linkedInURL: "https://www.linkedin.com/company/yourCompany/",
   author: {
@@ -25,17 +27,18 @@ let site = {
     default_og_image: '/images/default_og_image.png',
     default_og_type: 'article'
   },
+  font: "IBMPlexSans.var.latin-subset.woff2",
   paginationItemsPerPage: 4,
   development: {
     domain: 'localhost',
     baseURL: 'https://localhost:8080',
     debug: true,
     createSitemap: true,
-    allowIndexing: true,
-    allowRobots: true,
+    allowIndexing: false,
+    allowRobots: false,
     minifyCSS: false,
     inlineCSS: false,
-    minify_inline_HTML_CSS_JS: false,
+    minify_html: false,
   },
   staging: {
     domain: 'staging-full-start.netlify.app',
@@ -46,7 +49,7 @@ let site = {
     allowRobots: false,
     minifyCSS: false,
     inlineCSS: false,
-    minify_inline_HTML_CSS_JS: false,
+    minify_html: false,
   },
   production: {
     domain: 'full-start.netlify.app',
@@ -57,7 +60,7 @@ let site = {
     allowRobots: true,
     minifyCSS: true,
     inlineCSS: true,
-    minify_inline_HTML_CSS_JS: true,
+    minify_html: true,
   },
   currentYear: new Date().getFullYear(),
   currentDate: new Date(),

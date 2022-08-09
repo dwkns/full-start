@@ -20,9 +20,9 @@
         {%- for navItem in nav.main -%}
           {%- if navItem.showInMainNav -%}
             {%- if navItem.type == "link" -%}
-              <a href="#" class="hover:underline cursor-pointer block mt-4 lg:inline-block lg:mt-0 mr-6">{{navItem.name}}</a>
+              <a href="{{navItem.url}}" class="hover:underline cursor-pointer block mt-4 lg:inline-block lg:mt-0 mr-6">{{navItem.name}}</a>
             {%- else -%}
-              <a href="#" class="hover:underline cursor-pointer block mt-4 lg:inline-block px-4 py-2 leading-none rounded bg-brand text-white lg:mt-0 ">{{navItem.name}}</a>
+              <a href="{{navItem.url}}" class="hover:underline cursor-pointer block mt-4 lg:inline-block px-4 py-2 leading-none rounded bg-brand text-white lg:mt-0 ">{{navItem.name}}</a>
             {%- endif -%}
           {%- endif -%}
         {%- endfor -%}
