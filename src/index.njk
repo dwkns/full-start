@@ -1,26 +1,22 @@
 ---
-title: Page title which is longer so we can see how it all pans out. This is just the art bit for now. 
+title: Homepage 
 layout: _regular_page.njk
 metadata:
-  title: Page title for the HEAD and OG
-  description: The page description adslkfjasdlkf
+  title: Page title for the <title> and OG
+  description: The page description
   og_image:
-noindex: 
-sitemap:
+noindex: true
+sitemap: false
 permalink: /
 ---
-<section class="mx-auto mt-12 max-w-screen-3xl px-u2-pad">
-  <p  class="text-5xl font-thin">This starter uses a variable font whoop</p>
-  <p  class="text-4xl font-bold">This allows</p>
-  <p  class="text-lg font-medium">Multiple weights</p>
-  <p  class="text-sm font-regular">In a single file</p>
-  <p  class="text-sm font-black">And helps optimise the download</p>
+{%- from "_njk_components/components.njk" import component -%}
+{# Import all components  optional: ignore missing #}
+<section class="dwkns-mt">
+  <div class="dwkns-container">
+    <h1  class="text-4xl ">{{title}}</h1>
+    {{ component('simple-block', {
+        title: 'From the Simple Block Component'
+      })
+    }}
+  </div>
 </section>
-<section class="mx-auto mt-12 max-w-screen-3xl px-u2-pad">
-  {% from "_components/fancy-block/_macro.njk" import fancyBlock with context %}
-  {{ fancyBlock()}}
-</section>
-<script>
-let a = "bum"
-console.log('bum',a);
-</script>

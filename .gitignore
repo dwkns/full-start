@@ -1,8 +1,9 @@
 dist
 node_modules
-node_modules.nosync
-.env
 yarn-error.log
 
-# Local Netlify folder
+.DS_Store
+.env
+
+# Local Netlify folder if it exists
 .netlify

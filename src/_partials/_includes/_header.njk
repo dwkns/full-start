@@ -1,63 +1,33 @@
-<header  class="pt-8">
-  <nav x-data="{ animate: false }">
-    {# ------------- logo ------------- #}
-    <div class="relative flex items-center justify-between h-16 lg:items-end" >
-      {{ '<a href="/">' | safe if page.url != '/'  }}
-      {% inlineSVG './src/images/logo-with-strapline.svg', { class: "w-auto h-16", alt: "Under2 logo", id: "under2Logo" } %}
-      {{ '</a>' | safe if page.url != '/' }}
-      {# ------------- menu ------------- #}
-      <div id="navItems">
-        {# ------------- Desktop Nav ------------- #}
-        <div class="hidden lg:block">
-            <ul class="flex flex-row">
-              {%- for navItem in nav.main -%}
-                {%- if navItem.showInMainNav -%}
-                  <li>
-                    <a href="{{navItem.url}}">
-                      <div class="relative ml-12 cursor-pointer hover-link" x-data="{tooltip : null}" {# @click="tooltip = !tooltip" #} x-on:mouseover="tooltip = true" x-on:mouseleave="tooltip = false">
-                        <span class="text-xl">{{navItem.name}}</span>
-                        <p x-cloak x-show.transition.duration.50="tooltip" class="absolute right-0 w-56 mt-10 text-base text-right text-gray-700 transition-all -top-2">{{navItem.description |safe }}&nbsp;</p>
-                      </div>
-                    </a>
-                  </li>
-                {%- endif -%}
-              {%- endfor -%}
-            </ul>
-        </div>
-        {# ------------- Mobile Nav ------------- #}
-        {# ------------- button ------------- #}
-        <div class="relative flex flex-row items-baseline h-12 cursor-pointer lg:hidden">
-          <div class="realtive" @click="animate=!animate" {# aria-expanded="animate" #}>
-            <span class="sr-only">Menu</span>
-            <svg x-show.transition.duration.150="!animate" class="absolute inset-y-0 right-0 w-8 h-full text-u2-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-            <svg x-show.transition.duration.150="animate" class="absolute inset-y-0 right-0 w-8 h-full text-u2-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" x-cloak="x-cloak">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-          </div>
-        </div>
+<div class="dwkns-container py-4">
+  <nav class="flex items-center justify-between flex-wrap text-brand">
 
-      </div>
+    <div id="site-logo">
+      <a href="/" class="cursor-pointer flex items-center">
+        {% inlineSVG "./src/images/site-logo.svg", { class: "fill-current h-12 w-auto mr-4" } %}
+        <span class="font-semibold text-2xl tracking-tight">{{site.name}} logo</span>
+      </a>
     </div>
-    {# ------------- pannel ------------- #}
-    <div class="block overflow-hidden transition-all max-h-0" x-cloak x-ref="menuPanel" x-bind:style="animate ? 'max-height: ' + $refs.menuPanel.scrollHeight + 'px; opacity: 1' : 'max-height: 0; opacity: .6'" @keydown.escape.window="animate = false">
-      <div class="w-full max-h-full pt-4 pb-1 rounded-lg ">
-        <ul class="">
-          {%- for navItem in nav.main -%}
-            {%- if navItem.showInMainNav -%}
-              <li>
-                <a href="{{navItem.url}}">
-                  <div class="p-4 mb-2 bg-black cursor-pointer">
-                    <p class="text-2xl font-bold text-white">{{navItem.name}}</p>
-                    <p class="mt-1 text-base text-white">{{navItem.description | safe}}</p>
-                  </div>
-                </a>
-              </li>
+
+    <div class="block lg:hidden">
+      <button id="mobileNavButton" class="flex items-center">
+        <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+      </button>
+    </div>
+
+    <div id="main-nav" class="w-full lg:flex items-center lg:w-auto hidden">
+      <div class="text-lg font-semibold lg:flex-row">
+        {%- for navItem in nav.main -%}
+          {%- if navItem.showInMainNav -%}
+            {%- if navItem.type == "link" -%}
+              <a href="#" class="hover:underline cursor-pointer block mt-4 lg:inline-block lg:mt-0 mr-6">{{navItem.name}}</a>
+            {%- else -%}
+              <a href="#" class="hover:underline cursor-pointer block mt-4 lg:inline-block px-4 py-2 leading-none rounded bg-brand text-white lg:mt-0 ">{{navItem.name}}</a>
             {%- endif -%}
-          {%- endfor -%}
-        </ul>
+          {%- endif -%}
+        {%- endfor -%}
       </div>
     </div>
+
   </nav>
-</header>
+</div>

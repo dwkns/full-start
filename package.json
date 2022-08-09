@@ -4,14 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@11ty/eleventy": "2.0.0-canary.9",
-    "@tailwindcss/forms": "^0.5.1",
+    "@11ty/eleventy": "2.0.0-canary.14",
+    "@tailwindcss/forms": "^0.5.2",
     "@tailwindcss/typography": "^0.5.2",
-    "alpinejs": "^3.10.2",
     "autoprefixer": "^10.4.7",
     "cheerio": "^1.0.0-rc.10",
     "cssnano": "^5.1.7",
-    "dotenv": "^16.0.0",
+    "dotenv": "^16.0.1",
+    "dwkns-eleventy-plugins": "^0.0.6",
     "esbuild": "^0.14.38",
     "html-minifier": "^4.0.0",
     "js-cookie": "^3.0.1",
@@ -22,11 +22,9 @@
     "pluralize": "^8.0.0",
     "postcss": "^8.4.13",
     "postcss-cli": "^9.1.0",
+    "rimraf": "^3.0.2",
     "tailwindcss": "^3.0.24",
     "tailwindcss-debug-screens": "^2.2.1"
-  },
-  "env": {
-    "node": true
   },
   "scripts": {
     "clean": "rimraf dist build",
@@ -40,8 +38,16 @@
     "build:esbuild": "esbuild src/scripts/main.js --bundle --minify --sourcemap --outfile=dist/scripts/main.js",
     "build:eleventy": "NODE_ENV=production eleventy",
     "serve": "NODE_ENV=production npm-run-all clean -p build:* serve-static",
-    "serve-static": "npx serve dist",
-    "tent": "npx serve dist"
+    "serve-static": "npx serve dist"
   },
-  "author": "dazza"
+  "author": "dazza",
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 2017
+    },
+    "env": {
+      "es6": true,
+      "node": true
+    }
+  }
 }

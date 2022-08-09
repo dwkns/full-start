@@ -1,11 +1,13 @@
-import Alpine from 'alpinejs'
-import Cookies from "js-cookie";
-
-
-window.Cookies = Cookies
-window.Alpine = Alpine
-Alpine.start()
+// import Cookies from "js-cookie";
+// window.Cookies = Cookies
 
 window.addEventListener('DOMContentLoaded', () => {
-console.log('DOMContentLoaded');
+
+  // Toggle naviation menu
+  const mobileNavButton = document.getElementById('mobileNavButton')
+    
+  mobileNavButton.addEventListener('click', function () {
+    const mainNavElement = document.getElementById('main-nav');
+    mainNavElement.classList.toggle('hidden');
+  });
 })

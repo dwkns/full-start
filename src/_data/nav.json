@@ -5,6 +5,7 @@
       "description": "",
       "url": "/",
       "showInMainNav": false,
+      "type": "link",
       "width": 48
     },
     
@@ -13,6 +14,7 @@
       "description": "What we think",
       "url": "/blog/",
       "showInMainNav": true,
+      "type": "link",
       "showInFooter": false,
       "width": 48
     },
@@ -21,6 +23,7 @@
       "description": "Learn about us",
       "url": "/about-us/",
       "showInMainNav": true,
+      "type": "link",
       "showInFooter": false,
       "width": 48
     },
@@ -30,6 +33,7 @@
       "description": "Get in touch",
       "url": "/contact/",
       "showInMainNav": true,
+      "type": "button",
       "showInFooter": true,
       "width": 48
     }

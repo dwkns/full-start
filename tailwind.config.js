@@ -1,6 +1,11 @@
 const tailwindTheme = require('tailwindcss/defaultTheme');
+const tailwindTypography =  require('@tailwindcss/typography');
+const tailwindForms = require('@tailwindcss/forms')
 const debugScreens = require('tailwindcss-debug-screens');
 
+let minWidth = 320
+let maxWidth = 1280
+let contentWidth = 92.9
 
 module.exports = {
   mode: 'jit',
@@ -12,19 +17,29 @@ module.exports = {
   darkMode: 'media', // or 'media' or 'class'
   theme: {
     screens: {
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1300px',
-      '2xl': '1500px',
-      '3xl': '1600px',
+      sm: '600px',
+      lg: ' 950px'
     },
     fontFamily: {
-      // 'sans': ['Inter', ...tailwindTheme.fontFamily.sans],
       'sans': ['Plex', ...tailwindTheme.fontFamily.sans],
-      // 'sans': ['Inter'],
     },
     extend: {
+
+      width: {
+        '93%': `clamp(${minWidth}px, ${contentWidth}vw, ${maxWidth}px)`,
+        '100%': `${maxWidth}px`,
+        '125%': `${maxWidth * 1.25}px`,
+      },
+      spacing: {
+      },
+      boxShadow: {
+        'brand': '0 0 15px rgba(0, 0, 0, 0.15)',
+      },
+      maxWidth: {
+        '100%': `${maxWidth}px`,
+        '125%': `${maxWidth * 1.25}px`,
+        '93%': `clamp(${minWidth}px, ${contentWidth}vw, ${maxWidth}px)`,
+      },
       colors: {
         'brand': '#0B86EB',
         'brand-alt': '#15609F',
@@ -37,5 +52,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [debugScreens],
+  plugins: [debugScreens,tailwindForms, tailwindTypography],
 }

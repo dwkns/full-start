@@ -4,46 +4,31 @@
 @font-face {
   font-family: 'Plex';
   font-display: optional;
-  src: url('/fonts/IBMPlexSans.var.latin-subset.woff2') format('woff2 supports variations'),
-       url('/fonts/IBMPlexSans.var.latin-subset.woff2') format('woff2-variations');
+  src: url('/fonts/IBMPlexSans.var.latin-subset.woff2')
+      format('woff2 supports variations'),
+    url('/fonts/IBMPlexSans.var.latin-subset.woff2') format('woff2-variations');
   font-weight: 100 900;
   font-stretch: 25% 151%;
   unicode-range: U+000-5FF;
 }
 
-
 @tailwind utilities;
 
-[x-cloak] {
-    display: none !important;
-  }
-
 :root {
-    --brand: rgb(11, 134, 235);
-    --brand-alt: rgb(23, 161, 23);
+  --brand: rgb(11, 134, 235);
+  --brand-alt: rgb(23, 161, 23);
 }
 
 @layer utilities {
-  
-    .hover-link:hover {
-      cursor: pointer;
-      text-decoration-thickness: 4px;
-      text-decoration-line: underline;
-      text-decoration-color: var(--brand);
-    }
+  .dwkns-container {
+    @apply px-4 mx-auto sm:px-0 sm:w-93%;
+  }
 
+  .dwkns-grid {
+    @apply grid grid-cols-12 gap-4 sm:gap-8 lg:gap-16;
+  }
 
-    .primary-button {
-      @apply px-8 py-2 text-base font-semibold rounded-xl bg-pink-200 text-center cursor-pointer
-    }
-    
-    .primary-button:hover {
-      @apply bg-lime-300
-    }
-    
-    
-    .inactive-button {
-      @apply px-4 py-2 font-bold rounded-xl text-black text-center 
-    }
-
+  .dwkns-mt {
+    @apply mt-4 sm:mt-8 lg:mt-16
+  }
 }

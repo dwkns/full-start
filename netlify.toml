@@ -5,8 +5,7 @@ command = "yarn build"
 [dev]
 command = "yarn start"
 
-[[headers]]
-for = "/*"
-  [headers.values]
-  Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+# [[headers]]
+# for = "/*"
+#   [headers.values]
 #   Content-Security-Policy = "default-src 'unsafe-eval'; script-src:  'unsafe-inline'; style-src  'unsafe-inline' ;"

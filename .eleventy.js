@@ -8,28 +8,32 @@ const slugify = require('slugify');
 const pluralize = require("pluralize");
 const site = require('./src/_data/site.js') // load the site configuration files
 
+// const { logToConsole, inlineSVG, htmlMinifer } = require('../dwkns-eleventy-plugins') // local version
+const { logToConsole, inlineSVG, htmlMinifer } = require('dwkns-eleventy-plugins')
+
 
 // ------------- Eleventy Functions -------------
 // Consider extracting these to a seperate file as you use them all the time. 
 
 
-// compress the html and inline CSS & JS
-const htmlminifer = (content, outputPath) => {
-  const minify = site[site.currentEnv].minify_inline_HTML_CSS_JS
-  if (!minify) { return content }
-  if (outputPath && outputPath.endsWith(".html")) {
-    let minified = htmlmin.minify(content, {
-      useShortDoctype: true,
-      removeComments: true,
-      collapseWhitespace: true,
-      minifyJS: true,
-      minifyCSS: true,
-    });
-    return minified;
-  }
-  return content;
+// // compress the html and inline CSS & JS
+// const htmlminifer = (content, outputPath) => {
+//   const minify = site[site.currentEnv].minify_inline_HTML_CSS_JS
+//   if (!minify) { return content }
+//   if (outputPath && outputPath.endsWith(".html")) {
+//     let minified = htmlmin.minify(content, {
+//       useShortDoctype: true,
+//       removeComments: true,
+//       collapseWhitespace: true,
+//       minifyJS: true,
+//       minifyCSS: true,
+//     });
+//     return minified;
+//   }
+//   return content;
+// }
 
-}
+
 // utility function to log value to HTML & the Console
 const logToHTML = (value) => {
   let str = util.inspect(value);
@@ -58,39 +62,37 @@ const addAnOrA = (word) => {
 
 
 
-// inline SVG
-// use with:  {% inlineSVG './path/to/your.svg', { class: "yourClass anotherClass" } %}
-const inlineSVG = async (fileName, options) => {
-  let svgOptions = options || {}
-  let className = svgOptions.class || ''
-  let id = svgOptions.id || ''
-  let title = svgOptions.alt || ''
+// // inline SVG
+// // use with:  {% inlineSVG './path/to/your.svg', { class: "yourClass anotherClass" } %}
+// const inlineSVG = async (fileName, options) => {
+//   let svgOptions = options || {}
+//   let className = svgOptions.class || ''
+//   let id = svgOptions.id || ''
+//   let title = svgOptions.alt || ''
 
-  // read the SVG 
-  const svgData = fs.readFileSync(fileName, 'utf8');
+//   // read the SVG 
+//   const svgData = fs.readFileSync(fileName, 'utf8');
 
-  //parse it with cheerio
-  const $ = cheerio.load(svgData, {
-    xmlMode: true
-  });
+//   //parse it with cheerio
+//   const $ = cheerio.load(svgData, {
+//     xmlMode: true
+//   });
 
-  // Add class if it is given. 
-  $('svg').addClass(className);
+//   // Add class if it is given. 
+//   $('svg').addClass(className);
 
-  // Add ID if given
-  $('svg').attr("id", id);
+//   // Add ID if given
+//   $('svg').attr("id", id);
 
-  $('title').remove(); // get rid of any titles. 
-  $('svg').prepend(`<title>${title}</title>`);
+//   $('title').remove(); // get rid of any titles. 
+//   $('svg').prepend(`<title>${title}</title>`);
 
+//   // Remove height and width attributes
+//   $('svg').removeAttr("width");
+//   $('svg').removeAttr("height");
 
-
-  // Remove height and width attributes
-  $('svg').removeAttr("width");
-  $('svg').removeAttr("height");
-
-  return $.html();
-}
+//   return $.html();
+// }
 
 
 // **********
@@ -276,9 +278,18 @@ const blogPostsByCategories = (collectionApi) => {
 // ------------- End of Eleventy Functions -------------
 
 
+
 module.exports = (eleventyConfig) => {
 
+  eleventyConfig.addPlugin(logToConsole);
+  eleventyConfig.addPlugin(inlineSVG);
 
+  // minify defaults to true if no options are passed in.
+  eleventyConfig.addPlugin(htmlMinifer, { 
+    minify: site[site.currentEnv].minify_inline_HTML_CSS_JS  
+  } );
+
+ 
 
 
   // custom collection with pagination for every category
@@ -321,10 +332,9 @@ module.exports = (eleventyConfig) => {
 
 
   // inline SVG
-  eleventyConfig.addAsyncShortcode('inlineSVG', inlineSVG);
+  // eleventyConfig.addAsyncShortcode('inlineSVG', inlineSVG);
 
-  // compress the html and inline CSS & JS
-  eleventyConfig.addTransform("htmlmin", htmlminifer);
+
 
   // utility function to log value to HTML
   eleventyConfig.addFilter('console', logToHTML);
@@ -360,7 +370,7 @@ module.exports = (eleventyConfig) => {
   eleventyConfig.setDataDeepMerge(true);
 
   eleventyConfig.setServerOptions({
- // Show local network IP addresses for device testing
+    // Show local network IP addresses for device testing
     showAllHosts: true,
 
   });
