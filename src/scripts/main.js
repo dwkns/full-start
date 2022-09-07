@@ -1,6 +1,5 @@
 // import Cookies from "js-cookie";
 // window.Cookies = Cookies
-
 window.addEventListener('DOMContentLoaded', () => {
 
   // Toggle naviation menu

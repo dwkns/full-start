@@ -1,5 +1,28 @@
-<div class=" bg-brand text-white dwkns-mt">
-   <div class="dwkns-container py-4 h-24 flex items-end">
-      <p>&copy; {{site.currentYear}} {{site.legalName}}</p>
+<div class=" dwkns-mt dwkns-container">
+   <div class="min-h-[200px] flex-col bg-brand text-white flex justify-between p-4 mt-6">
+      <div id="site-logo-header">
+         <a href="/" class="cursor-pointer flex items-center">
+            {% inlineSVG "./src/images/site-logo.svg", { class: "fill-current h-12 w-auto mr-3" } %}
+            <span class="font-semibold text-2xl tracking-tight">{{site.name}}</span>
+         </a>
+      </div>
+      <ul class="flex flex-col gap-y-1 mt-6">
+         {%- for navItem in nav.main -%}
+            {%- if navItem.showInFooter -%}
+               <li class="hover:underline cursor-pointer">
+                  <a href="{{navItem.url}}" >
+                     {{navItem.name}}
+                  </a>
+               </li>
+            {%- endif -%}
+         {%- endfor -%}
+      </ul>
+
+      <ul class="flex flex-row gap-x-6 mt-6 text-base">
+         <li>&copy; {{ site.currentYear }}&nbsp;{{site.legalName}}</li>
+         {# <li class="hover:underline cursor-pointer">
+            <a href="/privacy-policy/" >Privacy Policy</a>
+         </li> #}
+      </ul>
    </div>
 </div>

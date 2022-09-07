@@ -4,12 +4,12 @@ layout: _page_skeleton.njk
 <header class="">
   {% include '_includes/_header.njk' %}
 </header>
-<main class="">
+<main >
   <section class="dwkns-mt">
     <div class="dwkns-container">
       <h1  class="text-5xl text-center">{{title}}</h1>
       <h4  class="text-2xl text-center max-w-prose mx-auto mt-6">{{summary}}</h4>
-      <p class="text-center text-base pt-8">An <span class="font-semibold">{{type}}</span> in <span class="font-semibold">{{category}}</span> by <span class="font-semibold">{{author}}</span> on <span class="font-semibold">{{publishDate | readableDate}}</span></p>
+      <p class="text-center  pt-8">An <span class="font-semibold">{{type}}</span> in <span class="font-semibold">{{category}}</span> by <span class="font-semibold">{{author}}</span> on <span class="font-semibold">{{publishDate | readableDate}}</span></p>
       {{ content | safe }}
     </div>
   </section>
